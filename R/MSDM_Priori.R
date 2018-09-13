@@ -1,0 +1,320 @@
+#' Create spatial predictor variables to correct overprediction of species distribution models
+#'
+#' @param records data.frame. A database with geographical coordinates of species presences used to create species distribution models.
+#' @param x character. Column name with longitude values.
+#' @param y character. Column name with latitude values.
+#' @param sp character. Column name with species names.
+#' @param method character. A character string indicating which MSDM method must be used create.
+#' @param rasterlayer raster object. A raster, stack or brick object that will be used to construct species distribution models. This object will be used as a basis for creating MSDM variables with the same resolution, extent and pattern of empty cell that the environmental variables.
+#' @param dirsave character. A character string indicating the directory where result must be saved.
+#' @return This function save raster files (with geotiff format) in a folder named with the MSDM method. Such raster have to be used as covariate together with environmental variables at moment to construct species distribution models. A pair of raster layer are created for all species set for XY method, on the contrary, CML and KER create a specific raster layer for each species.
+#'
+#' @details 	XY (Latlong method). It assumes that spatial structure can partially explain
+#' species distribution (Bahn & Mcgill, 2007). Two raster layers will be created,
+#' containing the latitude and longitude of pixels in decimal degrees respectively.
+#' These raster layers should be included as covariates with the environmental layers to construct species distribution models.
+#'
+#'
+#' CML (Cumulative distance method). Compiled and adapted from Allouche et al., (2008), it assumes that
+#' pixels closer to presences are likely included in species distributions.
+#' A raster layer will be created containing the sum of Euclidian geographic distances
+#' from each pixel to all occurrences of a species. Obtained values are normalized to
+#' vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.
+#'
+#'
+#' KER (Kernel method). Also compiled and adapted from Allouche et al. (2008), this method,
+#' alike CML, assumes that pixels located in areas with higher density of occurrences are
+#' likely included in the actual species distribution. A raster layer was created containing
+#' the Gaussian value based in the density of occurrences of a species. Standard deviation
+#' of the Gaussian distribution was the maximum value in a vector of minimum distances between
+#' pairs of occurrences of a species. Gaussian values are normalized to vary from zero to one.
+#' This raster layer should be included as covariates with the environmental layers to construct species distribution models.
+#'
+#'
+#'@references
+#'\itemize{
+#'\item Allouche, O., Steinitz, O., Rotem, D., Rosenfeld, A., & Kadmon, R. (2008a). Incorporating distance constraints into species distribution models. Journal of Applied Ecology, 45(2), 599-609. doi:10.1111/j.1365-2664.2007.01445.x
+#'\item Bahn, V., & Mcgill, B. J. (2007). Can niche-based distribution models outperform spatial interpolation? Global Ecology and Biogeography, 16(6), 733-742. doi:10.1111/j.1466-8238.2007.00331.x
+#'}
+
+
+
+#'@examples
+#' library(MSDM)
+#' library(raster)
+#'
+#' data("rlayer")
+#' data("occurrences")
+#'
+#' plot(rlayer)
+#' head(occurrences)
+#'
+#' tmdir <- tempdir()
+#' tmdir # temporal directory where will be saves raster layers
+#'
+#' # XY method----
+#' MSDM_Priori(records = occurrences,
+#'             x = "x", y = "y", sp = "sp", method = "XY",
+#'             rasterlayer = rlayer, dirsave = tmdir)
+#'
+#' # open directory were raster were saved
+#' rdir <- paste(tmdir, "MSDM_XY", sep = '/')
+#' rdir
+#' shell.exec(rdir)
+#'
+#' # read new MSDM layers
+#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
+#' new_var <- stack(new_var)
+#' plot(new_var)
+#'
+#' # CML method----
+#' MSDM_Priori(records = occurrences,
+#'             x = "x", y = "y", sp = "sp", method = "CML",
+#'             rasterlayer = rlayer, dirsave = tmdir)
+#'
+#' # open directory were raster were saved
+#' rdir <- paste(tmdir, "MSDM_CML", sep = '/')
+#' rdir
+#' shell.exec(rdir)
+#'
+#' # read new MSDM layers
+#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
+#' new_var <- stack(new_var)
+#' plot(new_var)
+#'
+#' # MIN method----
+#' MSDM_Priori(records = occurrences,
+#'             x = "x", y = "y", sp = "sp", method = "MIN",
+#'             rasterlayer = rlayer, dirsave = tmdir)
+#'
+#' # open directory were raster were saved
+#' rdir <- paste(tmdir, "MSDM_MIN", sep = '/')
+#' rdir
+#' shell.exec(rdir)
+#'
+#' # read new MSDM layers
+#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
+#' new_var <- stack(new_var)
+#' plot(new_var)
+#'
+#'
+#' # KER methods----
+#' MSDM_Priori(records = occurrences,
+#'             x = "x", y = "y", sp = "sp", method = "KER",
+#'             rasterlayer = rlayer, dirsave = tmdir)
+#'
+#' # open directory were raster were saved
+#' rdir <- paste(tmdir, "MSDM_KER", sep = '/')
+#' rdir
+#' shell.exec(rdir)
+#'
+# # read new MSDM layers
+#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
+#' new_var <- stack(new_var)
+#' plot(new_var)
+#'
+#' @import raster
+#' @import rgdal
+#' @importClassesFrom raster RasterStack RasterLayer
+#' @importFrom flexclust dist2
+#' @importFrom sp gridded<-
+#' @seealso \code{\link{MSDM_Posteriori}}
+#' @export
+MSDM_Priori <- function(records,
+                        x = NA,
+                        y = NA,
+                        sp = NA,
+                        method = c('XY', 'MIN', 'CML', 'KER'),
+                        rasterlayer = NULL,
+                        dirsave = NULL) {
+
+  if(any(is.na(c(x, y, sp))) & method != 'XY') {
+    stop("Complete x, y and sp arguments to use MIN, CML or KER methods")
+  }
+  if(is.null(rasterlayer)) {
+    stop("Complete rasterlayer argument")
+  }
+  if(is.null(dirsave)) {
+    stop("Complete dirsave argument")
+  }
+
+  Species <- split(records[, c(x, y)], records[, sp])
+
+  #Method 1: XY----
+  if (method == "XY") {
+    DirPRI <- "MSDM_XY"
+    dir.create(file.path(dirsave, DirPRI))
+    DirPRI <- file.path(dirsave, DirPRI)
+
+    #Extract coordinates of raster layer
+    rsd <- coordinates(rasterlayer)
+    long <- data.frame(rsd, val = NA)
+    lat <- data.frame(rsd, val = NA)
+    lins <- which(!is.na(rasterlayer[]))
+    #Create raster with Longitude
+    long[lins, 3] <- long[lins, 1]
+    gridded(long) <-  ~ x + y
+    long <- raster(long)
+    #Create raster with Latitude
+    lat[lins, 3] <- lat[lins, 2]
+    gridded(lat) <-  ~ x + y
+    lat <- raster(lat)
+    #Create XY Stack
+    result <- stack(long, lat)
+    names(result) <- c("Long", "Lat")
+    rm(lat, long)
+
+    writeRaster(
+      result,
+      file.path(DirPRI, names(result)),
+      format = "GTiff",
+      bylayer = TRUE,
+      overwrite = TRUE
+    )
+  }
+
+  #Method 2- Minimum distance ----
+  if (method == "MIN") {
+    DirPRI <- "MSDM_MIN"
+    dir.create(file.path(dirsave, DirPRI))
+    DirPRI <- file.path(dirsave, DirPRI)
+
+    spi <- as(rasterlayer, 'SpatialPixels')@coords
+    r <- lapply(Species, function(x){
+      x <- rasterize(x, rasterlayer, field = 1)
+      x <- as(x, 'SpatialPixels')@coords
+      return(x)
+    })
+    distr <- lapply(r, function(x) {
+      xx <- dist2(spi, x, method = 'euclidean', p = 2)
+      xx <- apply(xx, 1, min)
+      xx <- (xx - min(xx)) / (max(xx) - min(xx))
+      return(xx)
+    })
+    result <- list()
+    for (b in 1:length(Species)) {
+      msk <- rasterlayer
+      msk[!is.na(msk[])] <- distr[[b]]
+      result[[b]] <- msk
+    }
+    result <- stack(result)
+    names(result) <- names(Species)
+    rm(msk)
+    if (nlayers(result) > 1) {
+      writeRaster(
+        result,
+        file.path(DirPRI, names(Species)),
+        format = "GTiff",
+        bylayer = TRUE,
+        overwrite = TRUE
+      )
+    } else{
+      writeRaster(envM,
+                  file.path(DirPRI, names(Species)),
+                  format = "GTiff",
+                  overwrite = TRUE)
+    }
+  }
+
+  #Method 3: Cummulative distance----
+  if (method == "CML") {
+    DirPRI <- "MSDM_CML"
+    dir.create(file.path(dirsave, DirPRI))
+    DirPRI <- file.path(dirsave, DirPRI)
+
+    spi <- as(rasterlayer, 'SpatialPixels')@coords
+    r <- lapply(Species, function(x){
+      x <- rasterize(x, rasterlayer, field = 1)
+      x <- as(x, 'SpatialPixels')@coords
+      return(x)
+    })
+
+    distr <-
+      lapply(r, function(x) {
+        x <- dist2(spi, x, method = 'euclidean', p = 2)
+        x <- x + 1
+        x <- 1 / (1 / x ^ 2)
+        x <- apply(x, 1, sum)
+        x <- (x - min(x)) / (max(x) - min(x))
+        return(x)
+      })
+    envM <- list()
+    for (b in 1:length(Species)) {
+      spdist <- rasterlayer
+      spdist[!is.na(spdist[])] <- distr[[b]]
+      envM[[b]] <- spdist
+    }
+    envM <- stack(envM)
+    names(envM) <- names(Species)
+    rm(spdist)
+    if (nlayers(envM) > 1) {
+      writeRaster(
+        envM,
+        file.path(DirPRI, names(Species)),
+        format = "GTiff",
+        bylayer = TRUE,
+        overwrite = TRUE
+      )
+    } else{
+      writeRaster(envM,
+                  file.path(DirPRI, names(Species)),
+                  format = "GTiff",
+                  overwrite = TRUE)
+    }
+  }
+
+  #Method 4: Gaussian Kernel----
+  if (method == "KER") {
+    DirPRI <- "MSDM_KER"
+    dir.create(file.path(dirsave, DirPRI))
+    DirPRI <- file.path(dirsave, DirPRI)
+
+    spi <- as(rasterlayer, 'SpatialPixels')@coords
+    r <- lapply(Species, function(x){
+      x <- rasterize(x, rasterlayer, field = 1)
+      x <- as(x, 'SpatialPixels')@coords
+      return(x)
+    })
+
+    distp <-
+      lapply(r, function(x)
+        dist2(x, x, method = 'euclidean', p = 2))
+    distp1 <- lapply(distp, function(x)
+      matrix(0, nrow(x), 1))
+    result <- list()
+    for (b in 1:length(Species)) {
+      distsp <- distp[[b]]
+      for (c in 1:nrow(distsp)) {
+        vec <- distsp[c, ]
+        distp1[[b]][c] <- min(vec[vec != min(vec)])
+      }
+      sd_graus <- max(distp1[[b]])
+      distr <- dist2(spi, r[[b]], method = 'euclidean', p = 2)
+      distr2 <- distr
+      distr2 <-
+        (1 / sqrt(2 * pi * sd_graus) * exp(-1 * (distr / (2 * sd_graus ^ 2))))
+      distr2 <- apply(distr2, 1, sum)
+      spdist <- rasterlayer
+      spdist[!is.na(spdist[])] <- distr2
+      result[[b]] <- spdist
+    }
+    result <- stack(result)
+    names(result) <- names(Species)
+    rm(spdist)
+    if (nlayers(result) > 1) {
+      writeRaster(
+        result,
+        file.path(DirPRI, names(Species)),
+        format = "GTiff",
+        bylayer = TRUE,
+        overwrite = TRUE)
+    } else{
+      writeRaster(
+        result,
+        file.path(DirPRI, names(Species)),
+        format = "GTiff",
+        overwrite = TRUE)
+    }
+  }
+  return(DirPRI)
+}
