@@ -1,2 +1,2 @@
 # MSDM
-Methods to correct overprediction of species distribution models
+Overprediction correction approaches in species distribution models
