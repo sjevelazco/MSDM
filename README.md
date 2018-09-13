@@ -1,7 +1,5 @@
 # MSDM
 Overprediction correction approaches in species distribution models
-<<<<<<< HEAD
-=======
 
 
 ## Install MSDM package
@@ -20,4 +18,3 @@ MSDM provides tools to correct overprediction of species distribution models. Th
 *.* **MSDM_Posteriori**: provides four methods, named *OBR*, *PRES*, *LQ*, *MCP*, and *BMCP*. All theme correct overprediction of species distribution models based on occurrences and suitability patterns of species. 
 
 
->>>>>>> 7b29e6c7e8ff07440a2566cc4663af02888d3234
