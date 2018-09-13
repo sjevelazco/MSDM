@@ -10,7 +10,7 @@
 #' Raster layer must be in geotiff format
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivty)
 #' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about differt thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
-#'
+#' @param buffer numeric. Buffer width in km to be used in BMCP approach.
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
 
@@ -109,7 +109,6 @@
 #' # BMCP method----
 #' MSDM_Posteriori(records=occurrences, absences=absences,
 #'                 x="x", y="y", sp="sp", method="BMCP",
-#'                 dirraster = dir_raster, threshold = "spec_sens",
 #'                 dirsave = tmdir)
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
@@ -264,9 +263,10 @@ MSDM_Posteriori <- function(records,
   }
 
   #### threshold for BMCP method
-  if (method == "BMCP") {
-    cat("Select buffer distance (km):")
-    CUT_Buf <- (as.numeric(readLines(n = 1))) * 1000
+  if (method == "BMCP" & is.null(buffer)) {
+    stop("If BMCP approach is used a numeric value must by supplied to 'buffer' argument.")
+  } else if (method == "BMCP" & is.numeric(buffer)) {
+    buffer <- buffer * 1000
   }
 
   # loop to process each species
@@ -289,7 +289,7 @@ MSDM_Posteriori <- function(records,
                      PredPoint[PredPoint$pres_abse == 0, 2])
     Thr <- unlist(c(threshold(Eval))[threshold])
 
-    #### MCP method----
+    # MCP method----
     if (method == "MCP") {
       hull <-
         convHull(singleSpData[singleSpData[, "pres_abse"] == 1, c("x", "y")], lonlat = TRUE)
@@ -331,7 +331,7 @@ MSDM_Posteriori <- function(records,
       hull2[hull2[] == 0] <- NA
       df <- rasterToPoints(hull2)
       df <- df[df[, 3] == 1,-3]
-      buf <- circles(df, lonlat = TRUE, d = CUT_Buf)
+      buf <- circles(df, lonlat = TRUE, d = buffer)
       buf <- predict(Adeq, buf,  mask = TRUE)
       buf[(hull[] == 1)] <- 1
       buf[(!is.na(Adeq[]) & is.na(buf[]))] <- 0
