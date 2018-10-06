@@ -4,7 +4,7 @@ Overprediction correction approaches in species distribution models
 
 ## Install MSDM package
 
-```c
+```javascript
 install_github("sjevelazco/MSDM")
 require(devtools)
 require(MSDM)
