@@ -7,7 +7,8 @@
 MSDM_Posteriori(records, absences, x = NA, y = NA, sp = NA,
   method = c("OBR", "PRES", "LQ", "MCP", "BMCP"), dirraster = NULL,
   threshold = c("kappa", "spec_sens", "no_omission", "prevalence",
-  "equal_sens_spec", "sensitivty"), dirsave = NULL)
+  "equal_sens_spec", "sensitivty"), buffer = c("single", "species_specific"),
+  dirsave = NULL)
 }
 \arguments{
 \item{records}{data.frame. A database with geographical coordinates of species presences used to create species distribution models.}
@@ -27,6 +28,8 @@ Raster layer must be in geotiff format}
 
 \item{threshold}{character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivty)
 to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about differt thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.}
+
+\item{buffer}{character. Type o buffer width use in BMCP approach.}
 
 \item{dirsave}{character. A character string indicating the directory where result must be saved.}
 }
@@ -80,8 +83,9 @@ with interior angles smaller than 180, enclosing all occurrences of a species.
 
 BMCP (Buffered Minimum Convex Polygon). Compiled and adapted
 from Kremen et al. (2008), it is alike the MCP except by the inclusion of a
-buffer zone surrounding minimum convex polygons. When used this method
-function will ask for a value in km to be used as the buffer with.
+buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer algument
+function will ask for a value in km to be used as the buffer with. When used "species_specific" a buffer will be calculated for each species based on the presences occurrences patterns, assuming as buffer width
+the maximum distance in a vector of minimal pairwise distances between occurrences.
 }
 \examples{
 
@@ -116,10 +120,9 @@ con_mcp <- stack(list.files(d[2], full.names = TRUE))
 plot(con_mcp)
 
 
-# BMCP method----
+# BMCP method with a single buffer for all species----
 MSDM_Posteriori(records=occurrences, absences=absences,
-                x="x", y="y", sp="sp", method="BMCP",
-                dirraster = dir_raster, threshold = "spec_sens",
+                x="x", y="y", sp="sp", method="BMCP", buffer="single",
                 dirsave = tmdir)
 
 d <- list.dirs(tmdir, recursive = FALSE)

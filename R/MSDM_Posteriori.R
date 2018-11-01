@@ -10,7 +10,7 @@
 #' Raster layer must be in geotiff format
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivty)
 #' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about differt thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
-#' @param buffer numeric. Buffer width in km to be used in BMCP approach.
+#' @param buffer character. Type o buffer width use in BMCP approach.
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
 
@@ -60,8 +60,9 @@
 #'
 #' BMCP (Buffered Minimum Convex Polygon). Compiled and adapted
 #' from Kremen et al. (2008), it is alike the MCP except by the inclusion of a
-#' buffer zone surrounding minimum convex polygons. When used this method
-#' function will ask for a value in km to be used as the buffer with.
+#' buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer algument
+#' function will ask for a value in km to be used as the buffer with. When used "species_specific" a buffer will be calculated for each species based on the presences occurrences patterns, assuming as buffer width
+#' the maximum distance in a vector of minimal pairwise distances between occurrences.
 #'
 #'
 #'@references
@@ -106,9 +107,9 @@
 #' plot(con_mcp)
 #'
 #'
-#' # BMCP method----
+#' # BMCP method with a single buffer for all species----
 #' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="BMCP",
+#'                 x="x", y="y", sp="sp", method="BMCP", buffer="single",
 #'                 dirsave = tmdir)
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
@@ -171,6 +172,7 @@
 #' @import rgdal
 #' @importClassesFrom raster RasterStack RasterLayer
 #' @importClassesFrom dismo ModelEvaluation ConvexHull CircleHull
+#' @importFrom geosphere distHaversine
 #' @importFrom dismo threshold evaluate convHull circles
 #' @importFrom flexclust dist2
 #' @importFrom sp coordinates gridded<- "coordinates<-"
@@ -190,6 +192,7 @@ MSDM_Posteriori <- function(records,
                                           'prevalence',
                                           'equal_sens_spec',
                                           'sensitivty'),
+                            buffer=c("single", "species_specific"),
                             dirsave = NULL) {
   if (any(is.na(c(x, y, sp)))) {
     stop("Complete 'x', 'y' or 'sp' arguments")
@@ -214,7 +217,7 @@ MSDM_Posteriori <- function(records,
     )
   ) == FALSE) {
     stop(
-      "'threshold' argument can has on of the next values:
+      "'threshold' argument have to be supplied with one of the next values:
       'kappa', 'spec_sens', 'no_omission',
       'prevalence', 'equal_sens_spec' or 'sensitivty'"
     )
@@ -228,8 +231,10 @@ MSDM_Posteriori <- function(records,
   dir.create(foldCon)
 
   # creation of a data.frame wiht presences and absences
-  SpData <-
-    rbind(records[, c(sp, x, y)], absences[, c(sp, x, y)])
+  records <- records[, c(sp, x, y)]
+  absences <- absences[, c(sp, x, y)]
+  colnames(records) <- colnames(absences) <- c('sp', 'x', 'y')
+  SpData <- rbind(records, absences)
   SpData$pres_abse <-
     c(rep(1, nrow(records)), rep(0, nrow(absences)))
 
@@ -248,7 +253,7 @@ MSDM_Posteriori <- function(records,
 
   # Vector with species names, and proving if records and raster layer
   # have the same specie names
-  SpNames <- as.character(unique(records[, sp]))
+  SpNames <- as.character(unique(records[, "sp"]))
   SpNamesR <- RasterList[, "sp"]
 
 
@@ -257,16 +262,19 @@ MSDM_Posteriori <- function(records,
             ' species names differ between records and raster files')
     message("Next names were not found in records database: ",
             paste0(SpNamesR[!SpNames %in% SpNamesR], " "))
+    RasterList <- RasterList[!(RasterList[, "sp"]%in%SpNamesR[!SpNames %in% SpNamesR]),]
     message("Next names were not found in raster layers: ",
             paste0(SpNames[!SpNames %in% SpNamesR], " "))
-    stop("species names must be the same in records, absences and raster layers")
+    records <- records[!(records$sp%in%SpNames[!SpNames %in% SpNamesR]), ]
+    message("species names would be the same in records, absences and raster layers")
   }
 
   #### threshold for BMCP method
-  if (method == "BMCP" & is.null(buffer)) {
-    stop("If BMCP approach is used a numeric value must by supplied to 'buffer' argument.")
-  } else if (method == "BMCP" & is.numeric(buffer)) {
-    buffer <- buffer * 1000
+  if (method == "BMCP" & length(buffer)>1) {
+    stop("If BMCP approach is used an option must be supplied to 'buffer' argument.")
+  } else if (method == "BMCP" & buffer=="sigle") {
+    cat("Give a buffer width in km to be used in BMCP approach")
+    buffer2 <- as.integer(readLines(n = 1)) * 1000
   }
 
   # loop to process each species
@@ -285,7 +293,7 @@ MSDM_Posteriori <- function(records,
     PredPoint <- extract(Adeq, singleSpData[, c(x, y)])
     PredPoint <-
       data.frame(pres_abse = singleSpData[, 'pres_abse'], PredPoint)
-    Eval <- evaluate(PredPoint[PredPoint$pres_abse == 1, 2],
+    Eval <- dismo::evaluate(PredPoint[PredPoint$pres_abse == 1, 2],
                      PredPoint[PredPoint$pres_abse == 0, 2])
     Thr <- unlist(c(threshold(Eval))[threshold])
 
@@ -331,7 +339,23 @@ MSDM_Posteriori <- function(records,
       hull2[hull2[] == 0] <- NA
       df <- rasterToPoints(hull2)
       df <- df[df[, 3] == 1,-3]
-      buf <- circles(df, lonlat = TRUE, d = buffer)
+      if (buffer=="sigle"){
+        buf <- circles(df, lonlat = TRUE, d = buffer2)
+      } else if(buffer=="species_specific"){
+          # method based on the maximum value of the minimum distance
+          dist <- dist2(sps, sps, method = 'euclidean', p = 2)
+          dist[dist == 0] <- NA
+          distmin <- apply(dist, 1, function(x)
+            min(x, na.rm = TRUE))
+          buffer2 <- max(distmin)
+          dist[lower.tri(dist)] <- NA
+          distl <- dist==buffer2
+          p1 <- which(apply(distl, 1,function(x) sum(x, na.rm = T))==1)
+          p2 <- which(apply(distl, 2,function(x) sum(x, na.rm = T))==1)
+          buffer2 <- distHaversine(sps[p1,c('x', 'y')], sps[p2,c('x', 'y')])
+          buf <- circles(df, lonlat = TRUE, d = buffer2)
+          rm(dist);rm(distl)
+        }
       buf <- predict(Adeq, buf,  mask = TRUE)
       buf[(hull[] == 1)] <- 1
       buf[(!is.na(Adeq[]) & is.na(buf[]))] <- 0
