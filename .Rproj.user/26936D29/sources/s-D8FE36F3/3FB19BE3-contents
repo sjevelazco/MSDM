@@ -1,0 +1,31 @@
+require(MSDM)
+data(models)
+data(occurences)
+
+head(occurences)
+plot(models)
+class(models)
+MSDM_Posterior(records = )
+
+tmdir <- tempdir()
+tmdir # temporal directory where will be saves raster layers
+
+# XY method
+MSDM_Priori(
+  records = occurences,
+  x = "x",
+  y = "y",
+  sp = "sp",
+  method = "KER",
+  rasterlayer = models$SP01,
+  dir_save = tmdir)
+
+# open directory were raster were saved
+rdir <- paste(tmdir, "MSDM_CML", sep = '/')
+rdir
+shell.exec(rdir) 
+
+# read raster new layers
+new_var <- list.files(rdir, pattern = ".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)

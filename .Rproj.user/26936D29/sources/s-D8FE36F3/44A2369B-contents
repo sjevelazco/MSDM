@@ -1,0 +1,185 @@
+
+
+# Istalar o pacote
+pkg <- choose.files() # selecionar o arquivo MSDM_0.1.0.tar.gz
+pkg
+install.packages(pkg, repos = NULL)
+
+
+require(MSDM)
+require(raster)
+
+?MSDM_Priori() # no help ainda tem de ser aprimorado o texto e o inglés :)
+?MSDM_Posteriori()
+
+
+
+# EXEMPLO COM OS METODOS A PRIORI-------------
+library(MSDM)
+library(raster)
+
+data("rlayer")
+data("occurrences")
+
+plot(rlayer)
+head(occurrences)
+
+tmdir <- tempdir()
+tmdir # temporal directory where will be saves raster layers
+
+# XY method----
+MSDM_Priori(records = occurrences,
+            x = "x", y = "y", sp = "sp", method = "XY",
+            rasterlayer = rlayer, dirsave = tmdir)
+
+# open directory were raster were saved
+rdir <- paste(tmdir, "MSDM_XY", sep = '/')
+rdir
+shell.exec(rdir)
+
+# read raster new layers
+new_var <- list.files(rdir, pattern = ".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)
+
+# CML method----
+MSDM_Priori(records = occurrences,
+            x = "x", y = "y", sp = "sp", method = "CML",
+            rasterlayer = rlayer, dirsave = tmdir)
+
+# open directory were raster were saved
+rdir <- paste(tmdir, "MSDM_CML", sep = '/')
+rdir
+shell.exec(rdir)
+
+# read raster new layers
+new_var <- list.files(rdir, pattern = ".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)
+
+# MIN method----
+MSDM_Priori(records = occurrences,
+            x = "x", y = "y", sp = "sp", method = "MIN",
+            rasterlayer = rlayer, dirsave = tmdir)
+
+# open directory were raster were saved
+rdir <- paste(tmdir, "MSDM_MIN", sep = '/')
+rdir
+shell.exec(rdir)
+
+# read raster new layers
+new_var <- list.files(rdir, pattern = ".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)
+
+
+# KER methods----
+MSDM_Priori(records = occurrences,
+            x = "x", y = "y", sp = "sp", method = "KER",
+            rasterlayer = rlayer, dirsave = tmdir)
+
+# open directory were raster were saved
+rdir <- paste(tmdir, "MSDM_KER", sep = '/')
+rdir
+shell.exec(rdir)
+
+# read raster new layers
+new_var <- list.files(rdir, pattern = ".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)
+
+
+
+# EXEMPLOS COM OS METODOS APOSTERIORI
+require(MSDM)
+require(raster)
+data("occurrences")
+data("absences")
+
+dir_raster <- system.file("extdata", package="MSDM")
+# List of continuosu raster layer
+list.files(dir_raster, full.names = T)
+
+# Create a temporary MSDM folder
+tmdir <- tempdir()
+tmdir
+dir.create(file.path(tmdir,"MSDM"))
+tmdir <- file.path( tmdir,"MSDM")
+tmdir
+
+# MCP methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="MCP",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+# Categorical models corrected bt MCP methods
+cat_mcp <- stack(list.files(d[1], full.names = T))
+plot(cat_mcp)
+# Continuos models corrected by MCP methods
+con_mcp <- stack(list.files(d[2], full.names = T))
+plot(con_mcp)
+
+
+# MCPB methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="MCPB",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+# Categorical models corrected bt MCP methods
+cat_mcpb <- stack(list.files(d[1], full.names = T))
+plot(cat_mcpb)
+# Continuous models corrected by MCP methods
+con_mcpb <- stack(list.files(d[2], full.names = T))
+plot(con_mcpb)
+
+# LQ methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="LQ",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt LQ methods
+cat_lq <- stack(list.files(d[1], full.names = T))
+plot(cat_lq)
+# Continuous models corrected by LQ methods
+con_lq <- stack(list.files(d[2], full.names = T))
+plot(con_lq)
+
+
+# OBR methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="OBR",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt OBR methods
+cat_obr <- stack(list.files(d[1], full.names = T))
+plot(cat_obr)
+# Continuous models corrected by OBR methods
+con_obr <- stack(list.files(d[2], full.names = T))
+plot(con_obr)
+
+
+# PRES methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="PRES",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt PRES methods
+cat_pres <- stack(list.files(d[1], full.names = T))
+plot(cat_pres)
+# Continuous models corrected by PRES methods
+con_pres <- stack(list.files(d[2], full.names = T))
+plot(con_pres)
+

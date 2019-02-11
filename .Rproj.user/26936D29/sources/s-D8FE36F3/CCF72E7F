@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549717423708.000,
+    "dirty" : false,
+    "encoding" : "ISO8859-1",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CCF72E7F",
+    "lastKnownWriteTime" : 1549749725,
+    "last_content_update" : 1549749725823,
+    "path" : "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/MSDM/R/MSDM_Posteriori.R",
+    "project_path" : "R/MSDM_Posteriori.R",
+    "properties" : {
+        "cursorPosition" : "14,161",
+        "scrollLine" : "9",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

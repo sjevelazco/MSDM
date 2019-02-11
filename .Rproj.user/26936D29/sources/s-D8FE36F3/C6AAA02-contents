@@ -1,0 +1,174 @@
+require(raster)
+require(flexclust)
+require(devtools)
+
+
+# Create dataset for MSDM packages
+models <- list.files('C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/models', full.names = T, pattern = ".tif")
+rlayer <- raster(models[1])
+
+rlayer <- models$SP01
+names(rlayer) <- 'rasterlayer'
+plot(models)
+
+occurrences <- "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/models/virtua_amostra.txt"
+occurrences <- read.table(occurrences, header = T, sep = '\t', stringsAsFactors = F)
+head(occurrences)
+occurrences <- occurrences[occurrences$sp%in%c("SP01", "SP02", "SP03", "SP04", "SP05"),]
+
+# absences <- "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/models/PseudoAusencias.txt"
+# absences <- read.table(absences, header = T, sep = '\t', stringsAsFactors = F)
+# colnames(absences)[1] <- 'sp'
+# head(absences)
+#
+# absences$sp <- as.character(absences$sp)
+# absences$sp[absences$sp%in%1:9] <- paste0('0',absences$sp[absences$sp%in%1:9])
+# head(absences)
+
+# write.table(absences, "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/models/PseudoAusencias.txt",
+#             sep = '\t',, col.names = T, row.names = F)
+
+absences <- "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/models/PseudoAusencias.txt"
+absences <- read.table(absences, header = T, sep = '\t', stringsAsFactors = F)
+absences <- absences[absences$sp%in%c("SP01", "SP02", "SP03", "SP04", "SP05"),]
+head(absences)
+
+require(MSDM)
+data('rlayer')
+data("occurrences")
+
+getwd()
+# save(rlayer, file="data/rlayer.RData")
+# save(occurrences, file="data/occurrences.RData")
+# save(absences, file="data/absences.RData")
+
+
+as <- list.files("C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/MSDM/layers", full.names = T)
+## change this as appropriate for your setup
+ dest_dir <- file.path(getwd(), "inst", "extdata")
+ dir.create(dest_dir, recursive = TRUE)
+ file.copy(as, dest_dir, overwrite = TRUE)
+ list.files(system.file("extdata", package="MSDM"), full.names = T)
+
+# usage posteriori------------
+data(occurrences)
+
+records <- sp_occ
+head(records)
+x="x"
+y="y"
+sp="sp"
+method="XY"
+rasterlayer=models$SP01
+dir_save <- "C:/Users/Santiago/OneDrive/Documentos/FORESTAL/1-Trabajos/43-MSDM/TestePackage"
+
+tmdir <- tempdir()
+tmdir
+MSDM_Priori(
+  records = occurrences,
+  x = "x",
+  y = "y",
+  sp = "sp",
+  method = "XY",
+  rasterlayer = rlayer,
+  dirsave = dir_save)
+
+new_var <- list.files(list.dirs(tmdir, recursive = F)[1], pattern=".tif", full.names = T)
+new_var <- stack(new_var)
+plot(new_var)
+
+
+# usage posteriori mehtods---------------
+# usage posteriori
+require(MSDM)
+require(raster)
+data("occurrences")
+data("absences")
+
+dir_raster <- system.file("extdata", package="MSDM")
+# List of continuosu raster layer
+list.files(dir_raster, full.names = T)
+
+# Create a MSDM folder in temporary files
+tmdir <- tempdir()
+tmdir
+dir.create(file.path(tmdir,"MSDM"))
+tmdir <- file.path( tmdir,"MSDM")
+tmdir
+
+# MCP methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="MCP",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+# Categorical models corrected bt MCP methods
+cat_mcp <- stack(list.files(d[1], full.names = T))
+plot(cat_mcp)
+# Continuos models corrected by MCP methods
+con_mcp <- stack(list.files(d[2], full.names = T))
+plot(con_mcp)
+
+
+# MCPB methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="MCPB",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+# Categorical models corrected bt MCP methods
+cat_mcpb <- stack(list.files(d[1], full.names = T))
+plot(cat_mcpb)
+# Continuos models corrected by MCP methods
+con_mcpb <- stack(list.files(d[2], full.names = T))
+plot(con_mcpb)
+
+# LQ methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="LQ",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt LQ methods
+cat_lq <- stack(list.files(d[1], full.names = T))
+plot(cat_lq)
+# Continuos models corrected by LQ methods
+con_lq <- stack(list.files(d[2], full.names = T))
+plot(con_lq)
+
+
+# OBR methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="OBR",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt OBR methods
+cat_obr <- stack(list.files(d[1], full.names = T))
+plot(cat_obr)
+# Continuos models corrected by OBR methods
+con_obr <- stack(list.files(d[2], full.names = T))
+plot(con_obr)
+
+
+# PRES methods----
+MSDM_Posteriori(records=occurrences, absences=absences,
+                x="x", y="y", sp="sp", method="PRES",
+                dirraster = dir_raster, threshold = "spec_sens",
+                dirsave = tmdir)
+
+d <- list.dirs(tmdir, recursive = F)
+
+# Categorical models corrected bt PRES methods
+cat_pres <- stack(list.files(d[1], full.names = T))
+plot(cat_obr)
+# Continuos models corrected by PRES methods
+con_pres <- stack(list.files(d[2], full.names = T))
+plot(con_obr)
+
