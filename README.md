@@ -6,7 +6,7 @@ manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://w
 Overprediction correction approaches in species distribution models
 
 
-## Install MSDM package
+## Installation
 
 ```r
 require(devtools)  
