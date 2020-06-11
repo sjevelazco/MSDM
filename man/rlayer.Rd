@@ -4,7 +4,9 @@
 \name{rlayer}
 \alias{rlayer}
 \title{A raster layer used to as expample in MSDM_Priori methods}
-\format{A raster of Americas continent from southern USA to southern South America:}
+\format{
+A raster of Americas continent from southern USA to southern South America:
+}
 \usage{
 rlayer
 }

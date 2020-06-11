@@ -4,13 +4,15 @@
 \name{absences}
 \alias{absences}
 \title{Virtual species absences}
-\format{A data frame with 250 rows and 3 variables:
+\format{
+A data frame with 250 rows and 3 variables:
 \describe{
   \item{sp}{virtual species names}
   \item{x}{longitude of species occurrences}
   \item{y}{latitude of species occurrences}
   ...
-}}
+}
+}
 \usage{
 absences
 }
