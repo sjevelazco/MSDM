@@ -1,4 +1,4 @@
-#' Methods to correct overprediction of species distribution models based on occurrences and suitability patterns of species.
+#' Methods to correct overprediction of species distribution models based on occurrences and suitability patterns.
 #'
 #' @param records data.frame. A database with geographical coordinates of species presences used to create species distribution models.
 #' @param absences data.frame. A database with geographical coordinates of species absences used to create species distribution models.
@@ -9,7 +9,7 @@
 #' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models.
 #' Raster layer must be in geotiff format
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivty)
-#' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about differt thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
+#' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
 #' @param buffer character. Type o buffer width use in BMCP approach.
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
@@ -33,7 +33,7 @@
 #'
 #'
 #' OBR(Occurrences based restriction)-
-#' The method assumes that suitable patches intercepting species occurrences (l)
+#' This method assumes that suitable patches intercepting species occurrences (l)
 #' are likely a part of species distributions than suitable patches that do not
 #' intercept any occurrence (k). Distance from all patches k species occurrences to the closest l
 #' patch is calculated, later it is removed k patches that trespass a species-specific
@@ -43,15 +43,15 @@
 #' the suitability of the pixel was reduced to zero. We assumed that this simple threshold
 #' is a surrogate of the species-specific dispersal ability. If T is low, either the species
 #' has been sampled throughout its distribution, or the species is geographically restricted,
-#' justifying a narrow inclusion of k patches.
+#' justifying a narrow inclusion of k patches (Mendes et al., 2020).
 #'
-#' PRES (Only occurrences based restriction). This is a more restrictive variant of the OBR method. It only retains those pixels in suitability patches intercepting occurrences (k)
+#' PRES (Only occurrences based restriction). This is a more restrictive variant of the OBR method. It only retains those pixels in suitability patches intercepting occurrences (k) (Mendes et al., 2020).
 #'
 #' LQ (Lower Quantile). This method is similar to the OBR method, except by the
 #' procedure to define a distance threshold to withdrawn k patches, which is the
 #' lower quartile distance between k patches to the closest l patch. Whenever a suitable
 #' pixel is within a k patch, i.e. not within this lower quartile, the suitability of the
-#' pixel is reduced to zero. This means that 75% of k patches were withdrawn from the model.
+#' pixel is reduced to zero. This means that 75% of k patches were withdrawn from the model (Mendes et al., 2020).
 #'
 #' MCP (Minimum Convex Polygon). Compiled and adapted from
 #' Kremen et al. (2008), this method excludes from SDMs climate suitable
@@ -60,13 +60,15 @@
 #'
 #' BMCP (Buffered Minimum Convex Polygon). Compiled and adapted
 #' from Kremen et al. (2008), it is alike the MCP except by the inclusion of a
-#' buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer algument
+#' buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer argument
 #' function will ask for a value in km to be used as the buffer with. When used "species_specific" a buffer will be calculated for each species based on the presences occurrences patterns, assuming as buffer width
 #' the maximum distance in a vector of minimal pairwise distances between occurrences.
 #'
+#' Further methodological and performance information of these methods see Mendes et al. (2020).
 #'
 #'@references
 #'\itemize{
+#'\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press.
 #'\item Kremen, C., Cameron, A., Moilanen, A., Phillips, S. J., Thomas, C. D.,
 #'Beentje, H., . Zjhra, M. L. (2008). Aligning Conservation Priorities Across
 #'Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
@@ -230,7 +232,7 @@ MSDM_Posteriori <- function(records,
   dir.create(foldCat)
   dir.create(foldCon)
 
-  # creation of a data.frame wiht presences and absences
+  # creation of a data.frame with presences and absences
   records <- records[, c(sp, x, y)]
   records <- records[!duplicated(records[, c(x, y)]),]
   absences <- absences[, c(sp, x, y)]
@@ -239,7 +241,7 @@ MSDM_Posteriori <- function(records,
   SpData$pres_abse <-
     c(rep(1, nrow(records)), rep(0, nrow(absences)))
 
-  # Data.frame wiht two columns 1-names of the species
+  # Data.frame with two columns 1-names of the species
   # 2-the directory of raster of each species
   if (is.null(dirraster) == TRUE) {
     stop("Give a directory in the dirraster argument")
@@ -260,7 +262,7 @@ MSDM_Posteriori <- function(records,
 
   if (any(!SpNames %in% SpNamesR)) {
     message(sum(!SpNames %in% SpNamesR),
-            ' species names differ between records and raster files')
+            ' species names differ between records and raster files \n')
     message("Next names were not found in records database: ",
             paste0(SpNamesR[!SpNames %in% SpNamesR], " "))
     RasterList <- RasterList[!(RasterList[, "sp"]%in%SpNamesR[!SpNames %in% SpNamesR]),]
@@ -280,7 +282,7 @@ MSDM_Posteriori <- function(records,
 
   # loop to process each species
   for (s in 1:length(SpNames)) {
-    print(paste(s, "from", length(SpNames), ":", SpNames[s]))
+    cat(paste(s, "from", length(SpNames), ":", SpNames[s]), '\n')
     # Read the raster of the species
     Adeq <-
       raster(RasterList[RasterList[, "sp"] == SpNames[s], 'RasterList'])
@@ -529,4 +531,5 @@ MSDM_Posteriori <- function(records,
       }
     }
   }
+  cat('results are in: \n', dirsave, '\n')
   }
