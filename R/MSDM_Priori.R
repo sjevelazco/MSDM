@@ -304,6 +304,8 @@ MSDM_Priori <- function(records,
       spdist[!is.na(spdist[])] <- distr2
       result[[b]] <- spdist
     }
+    result <- lapply(result, function(x)
+      (x - raster::cellStats(x, min)) / (raster::cellStats(x, max) - raster::cellStats(x, min)))
     result <- raster::stack(result)
     names(result) <- names(Species)
     rm(spdist)
@@ -322,5 +324,5 @@ MSDM_Priori <- function(records,
         overwrite = TRUE)
     }
   }
-  return(dir_pri)
+  cat('results are in: \n', dir_pri, '\n')
 }
