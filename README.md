@@ -3,7 +3,7 @@
 manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://www.tidyverse.org/lifecycle/#manturing)
 
 # MSDM
-Overprediction correction approaches in species distribution models
+Methods to deal with overprediction of species distribution models
 
 
 ## Installation
@@ -17,7 +17,7 @@ require(MSDM)
 
 ## Description
 
-MSDM provides tools to correct overprediction of species distribution models. There is two main functions `MSDM_Priori()` and `MSDM_Posteriori()`. 
+MSDM provides tools to correct or reduce overprediction of species distribution models. There is two main functions `MSDM_Priori()` and `MSDM_Posteriori()`. 
 
 *.* **`MSDM_Priori`**: offers four methods, named *XY*, *MIN*,  *CML*, and *KER*. These creates spatial predictor variables which have to be used with environmental variable to construct species distribution models. These approaches constrain the suitability predicted by SDMs to species occurrences.
 
