@@ -4,11 +4,19 @@
 \alias{MSDM_Posteriori}
 \title{Methods to correct overprediction of species distribution models based on occurrences and suitability patterns of species.}
 \usage{
-MSDM_Posteriori(records, absences, x = NA, y = NA, sp = NA,
-  method = c("OBR", "PRES", "LQ", "MCP", "BMCP"), dirraster = NULL,
-  threshold = c("kappa", "spec_sens", "no_omission", "prevalence",
-  "equal_sens_spec", "sensitivty"), buffer = c("single",
-  "species_specific"), dirsave = NULL)
+MSDM_Posteriori(
+  records,
+  absences,
+  x = NA,
+  y = NA,
+  sp = NA,
+  method = c("OBR", "PRES", "LQ", "MCP", "BMCP"),
+  dirraster = NULL,
+  threshold = c("kappa", "spec_sens", "no_omission", "prevalence", "equal_sens_spec",
+    "sensitivty"),
+  buffer = c("single", "species_specific"),
+  dirsave = NULL
+)
 }
 \arguments{
 \item{records}{data.frame. A database with geographical coordinates of species presences used to create species distribution models.}
