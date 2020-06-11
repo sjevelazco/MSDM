@@ -4,8 +4,15 @@
 \alias{MSDM_Priori}
 \title{Create spatial predictor variables to correct overprediction of species distribution models}
 \usage{
-MSDM_Priori(records, x = NA, y = NA, sp = NA, method = c("XY",
-  "MIN", "CML", "KER"), rasterlayer = NULL, dirsave = NULL)
+MSDM_Priori(
+  records,
+  x = NA,
+  y = NA,
+  sp = NA,
+  method = c("XY", "MIN", "CML", "KER"),
+  rasterlayer = NULL,
+  dirsave = NULL
+)
 }
 \arguments{
 \item{records}{data.frame. A database with geographical coordinates of species presences used to create species distribution models.}

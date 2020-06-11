@@ -1,0 +1,38 @@
+##%######################################################%##
+#                                                          #
+####          script to create MSDM package            ####
+#                                                          #
+##%######################################################%##
+
+require(devtools)
+require(roxygen2)
+require(raster)
+require(dplyr)
+# require(MSDM)
+
+# create base data for this package
+# package.skeleton()
+
+##%######################################################%##
+#                                                          #
+####          create dataset for this package           ####
+#                                                          #
+##%######################################################%##
+
+# Will be expored this data as *.Rdata but compressing them bzip2
+sp_sdm <- 'C:/Users/santi/Documents/GitHub/MSDM_data/layers' %>% list.files(., full.names = T) %>% stack() %>% brick()
+X11()
+# raster::crs(sp_model) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84"
+getwd()
+save(sp_sdm, file="C:/Users/santi/Documents/GitHub/MSDM/data/sp_sdm.RData", compress = 'bzip2')
+
+
+##%######################################################%##
+#                                                          #
+####                  create documents                  ####
+#                                                          #
+##%######################################################%##
+devtools::document()
+data("occurrences")
+
+
