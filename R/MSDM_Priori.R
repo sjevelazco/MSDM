@@ -142,31 +142,34 @@ MSDM_Priori <- function(records,
 
   #Method 1: XY----
   if (method == "XY") {
-    DirPRI <- "MSDM_XY"
-    dir.create(file.path(dirsave, DirPRI))
-    DirPRI <- file.path(dirsave, DirPRI)
+    dir_pri <- "MSDM_XY"
+    dir.create(file.path(dirsave, dir_pri))
+    dir_pri <- file.path(dirsave, dir_pri)
 
     #Extract coordinates of raster layer
-    rsd <- coordinates(rasterlayer)
+    rsd <- raster::coordinates(rasterlayer)
     long <- data.frame(rsd, val = NA)
     lat <- data.frame(rsd, val = NA)
     lins <- which(!is.na(rasterlayer[]))
+
     #Create raster with Longitude
     long[lins, 3] <- long[lins, 1]
-    gridded(long) <-  ~ x + y
-    long <- raster(long)
+    sp::gridded(long) <-  ~ x + y
+    long <- raster::raster(long)
+
     #Create raster with Latitude
     lat[lins, 3] <- lat[lins, 2]
-    gridded(lat) <-  ~ x + y
-    lat <- raster(lat)
-    #Create XY Stack
-    result <- stack(long, lat)
+    sp::gridded(lat) <-  ~ x + y
+    lat <- raster::raster(lat)
+
+    #Create LatLong Stack
+    result <- raster::stack(long, lat)
     names(result) <- c("Long", "Lat")
     rm(lat, long)
 
-    writeRaster(
+    raster::writeRaster(
       result,
-      file.path(DirPRI, names(result)),
+      file.path(dir_pri, names(result)),
       format = "GTiff",
       bylayer = TRUE,
       overwrite = TRUE
@@ -175,18 +178,18 @@ MSDM_Priori <- function(records,
 
   #Method 2- Minimum distance ----
   if (method == "MIN") {
-    DirPRI <- "MSDM_MIN"
-    dir.create(file.path(dirsave, DirPRI))
-    DirPRI <- file.path(dirsave, DirPRI)
+    dir_pri <- "MSDM_MIN"
+    dir.create(file.path(dirsave, dir_pri))
+    dir_pri <- file.path(dirsave, dir_pri)
 
     spi <- as(rasterlayer, 'SpatialPixels')@coords
-    r <- lapply(Species, function(x){
-      x <- rasterize(x, rasterlayer, field = 1)
+    r <- lapply(Species, function(x) {
+      x <- raster::rasterize(x, rasterlayer, field = 1)
       x <- as(x, 'SpatialPixels')@coords
       return(x)
     })
     distr <- lapply(r, function(x) {
-      xx <- dist2(spi, x, method = 'euclidean', p = 2)
+      xx <- flexclust::dist2(spi, x, method = 'euclidean', p = 2)
       xx <- apply(xx, 1, min)
       xx <- (xx - min(xx)) / (max(xx) - min(xx))
       return(xx)
@@ -197,20 +200,20 @@ MSDM_Priori <- function(records,
       msk[!is.na(msk[])] <- distr[[b]]
       result[[b]] <- msk
     }
-    result <- stack(result)
+    result <- raster::stack(result)
     names(result) <- names(Species)
     rm(msk)
-    if (nlayers(result) > 1) {
-      writeRaster(
+    if (raster::nlayers(result) > 1) {
+      raster::writeRaster(
         result,
-        file.path(DirPRI, names(Species)),
+        file.path(dir_pri, names(Species)),
         format = "GTiff",
         bylayer = TRUE,
         overwrite = TRUE
       )
     } else{
-      writeRaster(envM,
-                  file.path(DirPRI, names(Species)),
+      raster::writeRaster(envM,
+                  file.path(dir_pri, names(Species)),
                   format = "GTiff",
                   overwrite = TRUE)
     }
@@ -218,20 +221,20 @@ MSDM_Priori <- function(records,
 
   #Method 3: Cummulative distance----
   if (method == "CML") {
-    DirPRI <- "MSDM_CML"
-    dir.create(file.path(dirsave, DirPRI))
-    DirPRI <- file.path(dirsave, DirPRI)
+    dir_pri <- "MSDM_CML"
+    dir.create(file.path(dirsave, dir_pri))
+    dir_pri <- file.path(dirsave, dir_pri)
 
     spi <- as(rasterlayer, 'SpatialPixels')@coords
     r <- lapply(Species, function(x){
-      x <- rasterize(x, rasterlayer, field = 1)
+      x <- raster::rasterize(x, rasterlayer, field = 1)
       x <- as(x, 'SpatialPixels')@coords
       return(x)
     })
 
     distr <-
       lapply(r, function(x) {
-        x <- dist2(spi, x, method = 'euclidean', p = 2)
+        x <- flexclust::dist2(spi, x, method = 'euclidean', p = 2)
         x <- x + 1
         x <- 1 / (1 / x ^ 2)
         x <- apply(x, 1, sum)
@@ -244,20 +247,20 @@ MSDM_Priori <- function(records,
       spdist[!is.na(spdist[])] <- distr[[b]]
       envM[[b]] <- spdist
     }
-    envM <- stack(envM)
+    envM <- raster::stack(envM)
     names(envM) <- names(Species)
     rm(spdist)
     if (nlayers(envM) > 1) {
-      writeRaster(
+      raster::writeRaster(
         envM,
-        file.path(DirPRI, names(Species)),
+        file.path(dir_pri, names(Species)),
         format = "GTiff",
         bylayer = TRUE,
         overwrite = TRUE
       )
     } else{
-      writeRaster(envM,
-                  file.path(DirPRI, names(Species)),
+      raster::writeRaster(envM,
+                  file.path(dir_pri, names(Species)),
                   format = "GTiff",
                   overwrite = TRUE)
     }
@@ -265,20 +268,20 @@ MSDM_Priori <- function(records,
 
   #Method 4: Gaussian Kernel----
   if (method == "KER") {
-    DirPRI <- "MSDM_KER"
-    dir.create(file.path(dirsave, DirPRI))
-    DirPRI <- file.path(dirsave, DirPRI)
+    dir_pri <- "MSDM_KER"
+    dir.create(file.path(dirsave, dir_pri))
+    dir_pri <- file.path(dirsave, dir_pri)
 
     spi <- as(rasterlayer, 'SpatialPixels')@coords
     r <- lapply(Species, function(x){
-      x <- rasterize(x, rasterlayer, field = 1)
+      x <- raster::rasterize(x, rasterlayer, field = 1)
       x <- as(x, 'SpatialPixels')@coords
       return(x)
     })
 
     distp <-
       lapply(r, function(x)
-        dist2(x, x, method = 'euclidean', p = 2))
+        flexclust::dist2(x, x, method = 'euclidean', p = 2))
     distp1 <- lapply(distp, function(x)
       matrix(0, nrow(x), 1))
     result <- list()
@@ -289,7 +292,7 @@ MSDM_Priori <- function(records,
         distp1[[b]][c] <- min(vec[vec != min(vec)])
       }
       sd_graus <- max(distp1[[b]])
-      distr <- dist2(spi, r[[b]], method = 'euclidean', p = 2)
+      distr <- flexclust::dist2(spi, r[[b]], method = 'euclidean', p = 2)
       distr2 <- distr
       distr2 <-
         (1 / sqrt(2 * pi * sd_graus) * exp(-1 * (distr / (2 * sd_graus ^ 2))))
@@ -298,23 +301,23 @@ MSDM_Priori <- function(records,
       spdist[!is.na(spdist[])] <- distr2
       result[[b]] <- spdist
     }
-    result <- stack(result)
+    result <- raster::stack(result)
     names(result) <- names(Species)
     rm(spdist)
     if (nlayers(result) > 1) {
-      writeRaster(
+      raster::writeRaster(
         result,
-        file.path(DirPRI, names(Species)),
+        file.path(dir_pri, names(Species)),
         format = "GTiff",
         bylayer = TRUE,
         overwrite = TRUE)
     } else{
-      writeRaster(
+      raster::writeRaster(
         result,
-        file.path(DirPRI, names(Species)),
+        file.path(dir_pri, names(Species)),
         format = "GTiff",
         overwrite = TRUE)
     }
   }
-  return(DirPRI)
+  return(dir_pri)
 }
