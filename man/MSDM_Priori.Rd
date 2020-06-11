@@ -54,15 +54,23 @@ Further methodological and performance information of these methods see Mendes e
 library(MSDM)
 library(raster)
 
+# Raster data and a data.frame with occurrences will be loaded
 data("sp_sdm")
-data("occurrences") # this is a dataframe only with species presences
-
-plot(sp_sdm)
-class(sp_sdm)
-sp_sdm <- sp_sdm[[1]] # will be selected a layer of this RasterBrick
-class(sp_sdm)
-plot(sp_sdm)
+data("occurrences")
 head(occurrences)
+
+# Some changes will be done on sp_sdm object to be used as example
+plot(sp_sdm)
+class(sp_sdm)
+sp_sdm <- sp_sdm[[1]] # a layer of this RasterBrick will be selected
+class(sp_sdm)
+plot(sp_sdm)
+# Resolution of this raster  will decreased  only to reduce the time to process these examples. (do not do this with your own data)
+res(sp_sdm)
+sp_sdm <- raster::aggregate(sp_sdm, fact=2)
+res(sp_sdm)
+plot(sp_sdm)
+
 
 tmdir <- tempdir()
 tmdir # temporal directory where will be saves raster layers
