@@ -1,25 +1,24 @@
 {
-    "id": "555C325E",
-    "path": "~/GitHub/Construct_MSDM.R",
-    "project_path": null,
+    "id": "554994DE",
+    "path": "~/GitHub/MSDM/R/datasets.R",
+    "project_path": "R/datasets.R",
     "type": "r_source",
-    "hash": "1379290893",
+    "hash": "1670044205",
     "contents": "",
     "dirty": false,
-    "created": 1591878170023.0,
+    "created": 1591885110110.0,
     "source_on_save": false,
-    "relative_order": 4,
+    "relative_order": 5,
     "properties": {
-        "tempName": "Untitled1",
         "cursorPosition": "35,0",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1591879477,
+    "lastKnownWriteTime": 1591885117,
     "encoding": "ISO8859-1",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1591879477892,
+    "last_content_update": 1591885117091,
     "read_only": false,
     "read_only_alternatives": []
 }

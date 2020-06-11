@@ -43,10 +43,10 @@
 #' library(MSDM)
 #' library(raster)
 #'
-#' data("rlayer")
+#' data("sp_sdm")
 #' data("occurrences")
 #'
-#' plot(rlayer)
+#' plot(sp_sdm)
 #' head(occurrences)
 #'
 #' tmdir <- tempdir()
@@ -55,7 +55,7 @@
 #' # XY method----
 #' MSDM_Priori(records = occurrences,
 #'             x = "x", y = "y", sp = "sp", method = "XY",
-#'             rasterlayer = rlayer, dirsave = tmdir)
+#'             rasterlayer = sp_sdm, dirsave = tmdir)
 #'
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_XY", sep = '/')
@@ -70,7 +70,7 @@
 #' # CML method----
 #' MSDM_Priori(records = occurrences,
 #'             x = "x", y = "y", sp = "sp", method = "CML",
-#'             rasterlayer = rlayer, dirsave = tmdir)
+#'             rasterlayer = sp_sdm, dirsave = tmdir)
 #'
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_CML", sep = '/')
@@ -85,7 +85,7 @@
 #' # MIN method----
 #' MSDM_Priori(records = occurrences,
 #'             x = "x", y = "y", sp = "sp", method = "MIN",
-#'             rasterlayer = rlayer, dirsave = tmdir)
+#'             rasterlayer = sp_sdm, dirsave = tmdir)
 #'
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_MIN", sep = '/')
@@ -101,7 +101,7 @@
 #' # KER methods----
 #' MSDM_Priori(records = occurrences,
 #'             x = "x", y = "y", sp = "sp", method = "KER",
-#'             rasterlayer = rlayer, dirsave = tmdir)
+#'             rasterlayer = sp_sdm, dirsave = tmdir)
 #'
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_KER", sep = '/')
