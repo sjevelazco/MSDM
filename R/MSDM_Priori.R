@@ -116,6 +116,7 @@
 #' @import raster
 #' @import rgdal
 #' @importClassesFrom raster RasterStack RasterLayer
+#' @importFrom methods as
 #' @importFrom flexclust dist2
 #' @importFrom sp gridded<-
 #' @seealso \code{\link{MSDM_Posteriori}}
