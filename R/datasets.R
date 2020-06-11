@@ -1,6 +1,6 @@
 #' Virtual species occurrences.
 #'
-#' A dataset containing occurrences of 5 virtual species
+#' A dataset containing occurrences of five virtual species
 #'
 #' @format A data frame with 250 rows and 3 variables:
 #' \describe{
@@ -13,7 +13,7 @@
 
 #' Virtual species absences
 #'
-#' A dataset containing absences of 5 virtual species
+#' A dataset containing absences of five virtual species
 #'
 #' @format A data frame with 250 rows and 3 variables:
 #' \describe{
@@ -24,17 +24,12 @@
 #' }
 "absences"
 
-#' A raster layer used to as expample in MSDM_Priori methods
+#' A dataset containing absences of five virtual species
 #'
-#' A dataset containing absences of 5 virtual species
-#'
-#' @format A raster of Americas continent from southern USA to southern South America:
+#' @format A raster of Americas from the southern United States to southern South America:
 #' @examples
 #'
 #' require(raster)
-#' data("rlayer")
-#' plot(rlayer)
-"rlayer"
-
-
-
+#' data("sp_sdm")
+#' plot(sp_sdm)
+"sp_sdm"
