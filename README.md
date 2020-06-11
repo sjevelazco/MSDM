@@ -23,6 +23,9 @@ MSDM provides tools to correct overprediction of species distribution models. Th
 
 *.* **`MSDM_Posteriori`**: provides four methods, named *OBR*, *PRES*, *LQ*, *MCP*, and *BMCP*. All theme correct overprediction of species distribution models based on occurrences and suitability patterns of species. 
 
+### CITATION:
+**Medes, P.; Velazco S.J.E.; Andrade A.; De Marco, P. Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press.**
+
 > Test the package and give us feedback [here](https://github.com/andrefaa/MSDM/issues) or send an e-mail to sjevelazco@gmail.com or andrefaandrade@gmail.com!
 
 > MSDM package is integrated to [ENMTML](https://github.com/andrefaa/ENMTML) R package
