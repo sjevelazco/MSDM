@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/DOI/10.1016/j.envsoft.2019.104615.svg)](https://doi.org/10.1016/j.ecolmodel.2020.109180)
 [![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![Lifecycle:
 manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://www.tidyverse.org/lifecycle/#manturing)
@@ -28,7 +29,8 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 *.* **`MSDM_Posteriori`**: provides four methods, named *OBR*, *PRES*, *LQ*, *MCP*, and *BMCP*. These methods reduce overprediction of species distribution models already fitted based on the occurrences and suitability patterns of species. 
 
 ### CITATION:
-**Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. 2020. Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, *in press*.**
+**Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. 2020. Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, *in press*.** https://doi.org/10.1016/j.ecolmodel.2020.109180
+
 
 > Test the package and give us feedback [here](https://github.com/andrefaa/MSDM/issues) or send an e-mail to sjevelazco@gmail.com.
 
