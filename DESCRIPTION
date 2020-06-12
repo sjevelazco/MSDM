@@ -25,7 +25,7 @@ Description: A collection of methods for reducing overprediction of species dist
 License: GPL (>= 2)
 Depends: R (>= 3.5.0)
 Imports: raster, rgdal, flexclust, sp, dismo, geosphere, methods, igraph
-URL: https://github.com/sjevelazco/MSDM
+URL: https://sjevelazco.github.io/MSDM, https://github.com/sjevelazco/MSDM
 BugReports: https://github.com/sjevelazco/MSDM/issues
 Encoding: UTF-8
 LazyData: true
