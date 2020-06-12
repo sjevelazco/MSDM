@@ -59,9 +59,9 @@ Abbreviation list
 }
 
 
-All the methods used by this function use raster layer with
-the suitability values of a species distribution models (SDMs). After applied a threshold to binarize SDMs
- (see 'threshold' arguments), function creates a binarized raster layer with suitable and unsuitable patches.
+These methods reduce overprediction of species distribution models already fitted
+based on the occurrences and suitability patterns of species
+(see 'threshold' arguments)
 
 
 OBR(Occurrences based restriction)-
