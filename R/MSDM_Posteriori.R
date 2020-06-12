@@ -8,9 +8,9 @@
 #' @param method character. A character string indicating which MSDM method must be used create.
 #' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models.
 #' Raster layer must be in geotiff format
-#' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivty)
+#' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
 #' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
-#' @param buffer character. Type o buffer width use in BMCP approach.
+#' @param buffer character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)). "species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrence of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
 
@@ -273,11 +273,14 @@ MSDM_Posteriori <- function(records,
   }
 
   #### threshold for BMCP method
-  if ((method == "BMCP" & length(buffer)>1)) {
+  if ((method == "BMCP" & all(c("single", "species_specific")%in%buffer))) {
     stop("If BMCP approach is used an option must be supplied to 'buffer' argument.")
-  } else if ((method == "BMCP" & buffer=="single")) {
-    cat("Give a buffer width in km to be used in BMCP approach")
-    buffer2 <- as.integer(readLines(n = 1)) * 1000
+  } else if ((method == "BMCP" & buffer%in%"single")) {
+    if(all(c("type", "km")%in%names(buffer))){
+      buffer2 <- as.integer(buffer["km"]) * 1000
+    }else{
+      stop("Use buffer argument properly for 'single' buffer type method, e.g. buffer=c(type='single', km=100)\n")
+    }
   }
 
   # loop to process each species
@@ -507,7 +510,7 @@ MSDM_Posteriori <- function(records,
         AdeqPoints <- extract(AdeqBin2, AdeqPoints)[, 'Eucldist']
         fist <- AdeqBin
         fist[fist[] == 1] <- AdeqPoints
-        # Threshold based on Maximum value of minimum ditance between ocurrences
+        # Threshold based on maximum value of minimum distance between occurrences
         final <- fist <= CUT
         final[final == 0] <- NA
         Adeq2 <- Adeq
