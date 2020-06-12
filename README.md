@@ -17,7 +17,7 @@ require(MSDM)
 
 ## Description
 
-MSDM provides tools to correct or reduce overprediction of species distribution models. There are two groups of methods compiled in two main functions `MSDM_Priori()` and `MSDM_Posteriori()`. The main difference between both methods is that MSDM_Priori generates predictive spatial variables that will be used (along with the environmental variables) to construct species distribution models, whereas MSDM_Posteriori works on the already fitted models. For more information on MSDM see Mendes et al. (2020)
+MSDM provides tools to correct or reduce overprediction of species distribution models. There are two groups of methods compiled in two main functions `MSDM_Priori()` and `MSDM_Posteriori()`. The main difference between both methods is that MSDM_Priori generates predictive spatial variables that will be used (along with the environmental variables) to construct species distribution models, whereas MSDM_Posteriori works on the already fitted models. For more information on MSDM see [Mendes *et al.* (2020)](https://doi.org/10.1016/j.ecolmodel.2020.109180).
 
 *.* **`MSDM_Priori`**: offers four methods, named *XY*, *MIN*,  *CML*, and *KER*. All these methods consist of creating spatial predictor variables to be used with environmental variable to construct species distribution models. These approaches constrain the suitability predicted by species distribution models to species occurrences.
 
