@@ -65,11 +65,6 @@ class(sp_sdm)
 sp_sdm <- sp_sdm[[1]] # a layer of this RasterBrick will be selected
 class(sp_sdm)
 plot(sp_sdm)
-# Resolution of this raster  will decreased  only to reduce the time to process these examples. (do not do this with your own data)
-res(sp_sdm)
-sp_sdm <- raster::aggregate(sp_sdm, fact=2)
-res(sp_sdm)
-plot(sp_sdm)
 
 
 tmdir <- tempdir()
@@ -89,7 +84,6 @@ new_var <- stack(new_var)
 plot(new_var)
 
 
-
 # CML method----
 MSDM_Priori(records = occurrences,
             x = "x", y = "y", sp = "sp", method = "CML",
@@ -106,38 +100,6 @@ new_var <- stack(new_var)
 plot(new_var)
 # Note that a raster is created for each species
 
-
-
-# MIN method----
-MSDM_Priori(records = occurrences,
-            x = "x", y = "y", sp = "sp", method = "MIN",
-            rasterlayer = sp_sdm, dirsave = tmdir)
-
-# open directory were raster were saved
-rdir <- paste(tmdir, "MSDM_MIN", sep = '/')
-rdir
-shell.exec(rdir)
-
-# plot results
-new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
-new_var <- stack(new_var)
-plot(new_var)
-
-
-# KER methods----
-MSDM_Priori(records = occurrences,
-            x = "x", y = "y", sp = "sp", method = "KER",
-           rasterlayer = sp_sdm, dirsave = tmdir)
-
-# open directory were raster were saved
-rdir <- paste(tmdir, "MSDM_KER", sep = '/')
-rdir
-shell.exec(rdir)
-
-# plot results
-new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
-new_var <- stack(new_var)
-plot(new_var)
 
 }
 \references{

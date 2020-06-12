@@ -80,68 +80,44 @@
 #'
 #' require(MSDM)
 #' require(raster)
-#' data("occurrences")
-#' data("absences")
-#'
-#' dir_raster <- system.file("extdata", package="MSDM")
-#' # List of raster layer with species suitability
-#' list.files(dir_raster, full.names = TRUE)
+#' data("sp_sdm") #continuous species distribution models of five species
+#' data("occurrences") #presences data
+#' data("absences") #absences data
 #'
 #' # Create a temporary MSDM folder
 #' tmdir <- tempdir()
 #' tmdir
-#' dir.create(file.path(tmdir,"MSDM"))
-#' tmdir <- file.path( tmdir,"MSDM")
+#' dir.create(file.path(tmdir, "MSDM"))
+#' tmdir <- file.path(tmdir, "MSDM")
 #' tmdir
 #'
-#' # MCP method----
-#' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="MCP",
-#'                 dirraster = dir_raster, threshold = "spec_sens",
-#'                 dirsave = tmdir)
-#'
-#' d <- list.dirs(tmdir, recursive = FALSE)
-#' # Categorical models corrected by MCP methods
-#' cat_mcp <- stack(list.files(d[1], full.names = TRUE))
-#' plot(cat_mcp)
-#' # Continuous models corrected by MCP methods
-#' con_mcp <- stack(list.files(d[2], full.names = TRUE))
-#' plot(con_mcp)
-#'
+#' # The data of sp_sdm will be saved in a folder in the tmdir (this is not necessary when using your data, it is just to make this example reproducible)
+#' dir.create(file.path(tmdir, "original_sdm"))
+#' dir_models <- file.path(tmdir, "original_sdm")
+#' dir_models
+#' writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)), bylayer=TRUE, format='GTiff', overwrite=TRUE)
+#' # shell.exec(dir_models)
 #'
 #' # BMCP method with a single buffer for all species----
 #' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="BMCP", buffer="single",
+#'                 x="x", y="y", sp="sp", method="BMCP", buffer=c(type="single", km=150),
+#'                 dirraster = dir_models, threshold = "spec_sens",
 #'                 dirsave = tmdir)
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
-#' # Categorical models corrected by MCP methods
+#' # Categorical models corrected by BMCP methods
 #' cat_bmcp <- stack(list.files(d[1], full.names = TRUE))
 #' plot(cat_bmcp)
-#' # Continuous models corrected by MCP methods
+#' # Continuous models corrected by BMCP methods
 #' con_bmcp <- stack(list.files(d[2], full.names = TRUE))
 #' plot(con_bmcp)
 #'
-#' # LQ method----
-#' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="LQ",
-#'                 dirraster = dir_raster, threshold = "spec_sens",
-#'                 dirsave = tmdir)
-#'
-#' d <- list.dirs(tmdir, recursive = FALSE)
-#'
-#' # Categorical models corrected by LQ methods
-#' cat_lq <- stack(list.files(d[1], full.names = TRUE))
-#' plot(cat_lq)
-#' # Continuous models corrected by LQ methods
-#' con_lq <- stack(list.files(d[2], full.names = TRUE))
-#' plot(con_lq)
 #'
 #'
 #' # OBR method----
 #' MSDM_Posteriori(records=occurrences, absences=absences,
 #'                 x="x", y="y", sp="sp", method="OBR",
-#'                 dirraster = dir_raster, threshold = "spec_sens",
+#'                 dirraster = dir_models, threshold = "spec_sens",
 #'                 dirsave = tmdir)
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
@@ -152,23 +128,7 @@
 #' # Continuous models corrected by OBR methods
 #' con_obr <- stack(list.files(d[2], full.names = TRUE))
 #' plot(con_obr)
-#'
-#'
-#' # PRES method----
-#' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="PRES",
-#'                 dirraster = dir_raster, threshold = "spec_sens",
-#'                 dirsave = tmdir)
-#'
-#' d <- list.dirs(tmdir, recursive = FALSE)
-#'
-#' # Categorical models corrected by PRES methods
-#' cat_pres <- stack(list.files(d[1], full.names = TRUE))
-#' plot(cat_pres)
-#' # Continuous models corrected by PRES methods
-#' con_pres <- stack(list.files(d[2], full.names = TRUE))
-#' plot(con_pres)
-#'
+#
 #'
 #' @import raster
 #' @import rgdal
