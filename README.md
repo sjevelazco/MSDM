@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.1016/j.envsoft.2019.104615.svg)](https://doi.org/10.1016/j.ecolmodel.2020.109180)
+[![DOI](https://zenodo.org/badge/DOI/10.1016/j.ecolmodel.2020.109180.svg)](https://doi.org/10.1016/j.ecolmodel.2020.109180)
 [![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![Lifecycle:
 manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://www.tidyverse.org/lifecycle/#manturing)
