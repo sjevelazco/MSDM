@@ -11,7 +11,7 @@
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
 #' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
 #' @param buffer character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
-#' "species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrence of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").
+#' "species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrences of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
 
@@ -30,7 +30,7 @@
 #'
 #'All the methods used by this function use raster layer with
 #' the suitability values of a species distribution models (SDMs). After applied a threshold to binarize SDMs
-#'  (see 'threshold' arguments), function create a binarized raster layer with suitable and unsuitable patches.
+#'  (see 'threshold' arguments), function creates a binarized raster layer with suitable and unsuitable patches.
 #'
 #'
 #' OBR(Occurrences based restriction)-
