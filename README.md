@@ -20,7 +20,7 @@ require(MSDM)
 ```
 
 ## Package webpage
-See [MSDM](https://sjevelazco.github.io/MSDM) package webpage (https://sjevelazco.github.io/MSDM). For further details of function and examples see [here](https://sjevelazco.github.io/MSDM/reference/index.html) 
+See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazco.github.io/MSDM). For further details of function and examples see [here](https://sjevelazco.github.io/MSDM/reference/index.html) 
 
 ## Description
 
