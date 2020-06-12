@@ -17,6 +17,6 @@ A data frame with 250 rows and 3 variables:
 absences
 }
 \description{
-A dataset containing absences of 5 virtual species
+A dataset containing absences of five virtual species
 }
 \keyword{datasets}

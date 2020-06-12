@@ -17,6 +17,6 @@ A data frame with 250 rows and 3 variables:
 occurrences
 }
 \description{
-A dataset containing occurrences of 5 virtual species
+A dataset containing occurrences of five virtual species
 }
 \keyword{datasets}
