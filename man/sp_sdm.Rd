@@ -3,7 +3,7 @@
 \docType{data}
 \name{sp_sdm}
 \alias{sp_sdm}
-\title{A dataset containing absences of five virtual species}
+\title{A dataset containing distribution of five virtual species}
 \format{
 A raster of Americas from the southern United States to southern South America:
 }
@@ -11,7 +11,7 @@ A raster of Americas from the southern United States to southern South America:
 sp_sdm
 }
 \description{
-A dataset containing absences of five virtual species
+A dataset containing distribution of five virtual species
 }
 \examples{
 
