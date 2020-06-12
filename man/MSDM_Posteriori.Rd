@@ -14,7 +14,7 @@ MSDM_Posteriori(
   dirraster = NULL,
   threshold = c("kappa", "spec_sens", "no_omission", "prevalence", "equal_sens_spec",
     "sensitivty"),
-  buffer = c("single", "species_specific"),
+  buffer = NULL,
   dirsave = NULL
 )
 }
@@ -37,7 +37,8 @@ Raster layer must be in geotiff format}
 \item{threshold}{character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
 to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.}
 
-\item{buffer}{character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)). "species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrence of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").}
+\item{buffer}{character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
+"species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrence of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").}
 
 \item{dirsave}{character. A character string indicating the directory where result must be saved.}
 }
@@ -112,11 +113,13 @@ dir.create(file.path(tmdir, "MSDM"))
 tmdir <- file.path(tmdir, "MSDM")
 tmdir
 
-# The data of sp_sdm will be saved in a folder in the tmdir (this is not necessary when using your data, it is just to make this example reproducible)
+# The data of sp_sdm will be saved in a folder in the tmdir (this is not necessary when
+# using your data, it is just to make this example reproducible)
 dir.create(file.path(tmdir, "original_sdm"))
 dir_models <- file.path(tmdir, "original_sdm")
 dir_models
-writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)), bylayer=TRUE, format='GTiff', overwrite=TRUE)
+writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)),
+            bylayer=TRUE, format='GTiff', overwrite=TRUE)
 # shell.exec(dir_models)
 
 # BMCP method with a single buffer for all species----
@@ -132,7 +135,7 @@ plot(cat_bmcp)
 # Continuous models corrected by BMCP methods
 con_bmcp <- stack(list.files(d[2], full.names = TRUE))
 plot(con_bmcp)
-
+# shell.exec(rdir)
 
 
 # OBR method----
@@ -149,11 +152,14 @@ plot(cat_obr)
 # Continuous models corrected by OBR methods
 con_obr <- stack(list.files(d[2], full.names = TRUE))
 plot(con_obr)
+# shell.exec(rdir)
 
 }
 \references{
 \itemize{
-\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press.
+\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in
+species distribution models: how adding distance constraints can improve model accuracy,
+Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
 \item Kremen, C., Cameron, A., Moilanen, A., Phillips, S. J., Thomas, C. D.,
 Beentje, H., . Zjhra, M. L. (2008). Aligning Conservation Priorities Across
 Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),

@@ -92,7 +92,7 @@ MSDM_Priori(records = occurrences,
 # open directory were raster were saved
 rdir <- paste(tmdir, "MSDM_CML", sep = '/')
 rdir
-shell.exec(rdir)
+# shell.exec(rdir)
 
 # plot results
 new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
@@ -105,7 +105,7 @@ plot(new_var)
 \references{
 \itemize{
 \item Allouche, O.; Steinitz, O.; Rotem, D.; Rosenfeld, A.; Kadmon, R. (2008). Incorporating distance constraints into species distribution models. Journal of Applied Ecology, 45(2), 599-609. doi:10.1111/j.1365-2664.2007.01445.x
-\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press.
+\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
 \item Bahn, V.; Mcgill, B. J. (2007). Can niche-based distribution models outperform spatial interpolation? Global Ecology and Biogeography, 16(6), 733-742. doi:10.1111/j.1466-8238.2007.00331.x
 }
 }

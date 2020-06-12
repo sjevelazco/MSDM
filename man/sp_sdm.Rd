@@ -3,15 +3,15 @@
 \docType{data}
 \name{sp_sdm}
 \alias{sp_sdm}
-\title{A raster layer used as example in MSDM_Priori methods}
+\title{A dataset containing absences of five virtual species}
 \format{
-A raster of Americas continent from southern USA to southern South America:
+A raster of Americas from the southern United States to southern South America:
 }
 \usage{
 sp_sdm
 }
 \description{
-A dataset containing absences of 5 virtual species
+A dataset containing absences of five virtual species
 }
 \examples{
 

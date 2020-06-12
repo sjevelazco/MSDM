@@ -24,7 +24,7 @@ Maintainer: Santiago J.E. Velazco <sjevelazco@gmail.com>
 Description: A collection of methods for reducing overprediction of species distribution models.
 License: GPL (>= 2)
 Depends: R (>= 3.5.0)
-Imports: raster, rgdal, flexclust, sp, dismo, geosphere, methods
+Imports: raster, rgdal, flexclust, sp, dismo, geosphere, methods, igraph
 URL: https://github.com/sjevelazco/MSDM
 BugReports: https://github.com/sjevelazco/MSDM/issues
 Encoding: UTF-8
