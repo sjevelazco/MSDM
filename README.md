@@ -12,6 +12,10 @@ Methods to deal with overprediction of species distribution models
 require(devtools)  
 install_github("sjevelazco/MSDM")  
 require(MSDM)
+
+# See more details of funcions and examples
+?MSDM_Priori
+?MSDM_Posteriori
 ```
 
 
