@@ -4,7 +4,7 @@ Title: Methods to deal with overprediction of species distribution models
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Poliana",
-           family = "Medes",
+           family = "Mendes",
            role = c("aut"),
            comment = c(ORCID = "0000-0001-6061-3245")),
       person(given = "Santiago J.E.",

@@ -210,14 +210,14 @@
 #&gt; [1] "raster"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>sp_sdm</span>)</div><div class='img'><img src='MSDM_Priori-2.png' alt='' width='700' height='433' /></div><div class='input'>
 
 <span class='no'>tmdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
-<span class='no'>tmdir</span> <span class='co'># temporal directory where will be saves raster layers</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp23TXwi"</div><div class='input'>
+<span class='no'>tmdir</span> <span class='co'># temporal directory where will be saves raster layers</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\RtmpMpUfil"</div><div class='input'>
 <span class='fu'>MSDM_Priori</span>(<span class='kw'>records</span> <span class='kw'>=</span> <span class='no'>occurrences</span>,
             <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='st'>"sp"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"XY"</span>,
             <span class='kw'>rasterlayer</span> <span class='kw'>=</span> <span class='no'>sp_sdm</span>, <span class='kw'>dirsave</span> <span class='kw'>=</span> <span class='no'>tmdir</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; results are in: 
-#&gt;  C:\Users\santi\AppData\Local\Temp\Rtmp23TXwi/MSDM_XY </div><div class='input'>
+#&gt;  C:\Users\santi\AppData\Local\Temp\RtmpMpUfil/MSDM_XY </div><div class='input'>
 <span class='co'># open directory were raster were saved</span>
 <span class='no'>rdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>tmdir</span>, <span class='st'>"MSDM_XY"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>'/'</span>)
-<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp23TXwi/MSDM_XY"</div><div class='input'>
+<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\RtmpMpUfil/MSDM_XY"</div><div class='input'>
 <span class='co'># plot results</span>
 <span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>rdir</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>".tif"</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span>(<span class='no'>new_var</span>)
@@ -227,10 +227,10 @@
 <span class='fu'>MSDM_Priori</span>(<span class='kw'>records</span> <span class='kw'>=</span> <span class='no'>occurrences</span>,
             <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='st'>"sp"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"CML"</span>,
             <span class='kw'>rasterlayer</span> <span class='kw'>=</span> <span class='no'>sp_sdm</span>, <span class='kw'>dirsave</span> <span class='kw'>=</span> <span class='no'>tmdir</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; results are in: 
-#&gt;  C:\Users\santi\AppData\Local\Temp\Rtmp23TXwi/MSDM_CML </div><div class='input'>
+#&gt;  C:\Users\santi\AppData\Local\Temp\RtmpMpUfil/MSDM_CML </div><div class='input'>
 <span class='co'># open directory were raster were saved</span>
 <span class='no'>rdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>tmdir</span>, <span class='st'>"MSDM_CML"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>'/'</span>)
-<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp23TXwi/MSDM_CML"</div><div class='input'><span class='co'># shell.exec(rdir)</span>
+<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\RtmpMpUfil/MSDM_CML"</div><div class='input'><span class='co'># shell.exec(rdir)</span>
 
 <span class='co'># plot results</span>
 <span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>rdir</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>".tif"</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -250,7 +250,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Poliana Medes, Santiago J.E. Velazco, Andre F.A. Andrade, Paulo De Marco .</p>
+  <p>Developed by Poliana Mendes, Santiago J.E. Velazco, Andre F.A. Andrade, Paulo De Marco .</p>
 </div>
 
 <div class="pkgdown">
