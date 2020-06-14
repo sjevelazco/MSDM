@@ -157,7 +157,7 @@ plot(con_obr)
 }
 \references{
 \itemize{
-\item Medes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in
+\item Mendes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in
 species distribution models: how adding distance constraints can improve model accuracy,
 Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
 \item Kremen, C., Cameron, A., Moilanen, A., Phillips, S. J., Thomas, C. D.,
