@@ -30,7 +30,7 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
  
 <p align="center">
   <img src="https://github.com/sjevelazco/MSDM/blob/master/man/Figure/readme_figure.svg" />
-  <figcaption> (a) Example of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
+  <figcaption> (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
 </p>
 
 ### CITATION:
