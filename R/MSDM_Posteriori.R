@@ -4,10 +4,10 @@
 #' @param absences data.frame. A database with geographical coordinates of species absences used to create species distribution models.
 #' @param x character. Column name with longitude values. This name must be the same for presences and absences database.
 #' @param y character. Column name with latitude values. This name must be the same for presences and absences database.
-#' @param sp character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e. species distribution) databases.
+#' @param sp character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e. species distribution) databases. It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
+#' Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.
 #' @param method character. A character string indicating which MSDM method must be used create.
-#' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models.
-#' Raster layer must be in geotiff format
+#' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models. It is mandatory that the species names and the raster are the same (see comments about species names format in 'sp' argument ). Raster layer must be in geotiff format.
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
 #' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
 #' @param buffer character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
@@ -87,6 +87,9 @@
 #' data("occurrences") #presences data
 #' data("absences") #absences data
 #'
+#' # sp_sdm is database with simple species distribution models, i.e. without any restriction method
+#' plot(sp_sdm)
+#'
 #' # Create a temporary MSDM folder
 #' tmdir <- tempdir()
 #' tmdir
@@ -94,14 +97,15 @@
 #' tmdir <- file.path(tmdir, "MSDM")
 #' tmdir
 #'
-#' # The data of sp_sdm will be saved in a folder in the tmdir (this is not necessary when
-#' # using your data, it is just to make this example reproducible)
+#' # The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when
+#' # using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species
 #' dir.create(file.path(tmdir, "original_sdm"))
 #' dir_models <- file.path(tmdir, "original_sdm")
 #' dir_models
 #' writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)),
 #'             bylayer=TRUE, format='GTiff', overwrite=TRUE)
 #' # shell.exec(dir_models)
+#'
 #'
 #' # BMCP method with a single buffer for all species----
 #' MSDM_Posteriori(records=occurrences, absences=absences,

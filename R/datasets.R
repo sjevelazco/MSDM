@@ -1,6 +1,4 @@
-#' Virtual species occurrences.
-#'
-#' A dataset containing occurrences of five virtual species
+#' A dataset containing presences of five virtual species
 #'
 #' @format A data frame with 250 rows and 3 variables:
 #' \describe{
@@ -11,8 +9,6 @@
 #' }
 "occurrences"
 
-#' Virtual species absences
-#'
 #' A dataset containing absences of five virtual species
 #'
 #' @format A data frame with 250 rows and 3 variables:
@@ -24,7 +20,7 @@
 #' }
 "absences"
 
-#' A dataset containing absences of five virtual species
+#' A dataset containing distribution of five virtual species
 #'
 #' @format A raster of Americas from the southern United States to southern South America:
 #' @examples
