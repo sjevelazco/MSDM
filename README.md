@@ -19,9 +19,6 @@ require(MSDM)
 ?MSDM_Posteriori
 ```
 
-## Package website
-See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazco.github.io/MSDM). For further details of function and examples see [here](https://sjevelazco.github.io/MSDM/reference/index.html) 
-
 ## Description
 
 MSDM provides tools to correct or reduce overprediction of species distribution models. There are two groups of methods compiled in two main functions `MSDM_Priori()` and `MSDM_Posteriori()`. The main difference between both methods is that MSDM_Priori generates predictive spatial variables that will be used (along with the environmental variables) to construct species distribution models, whereas MSDM_Posteriori works on the already fitted models. For more information on MSDM see [Mendes *et al.* (2020)](https://doi.org/10.1016/j.ecolmodel.2020.109180).
@@ -30,8 +27,19 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 
 *.* **`MSDM_Posteriori`**: provides four methods, named *OBR*, *PRES*, *LQ*, *MCP*, and *BMCP*. These methods reduce overprediction of species distribution models already fitted based on the occurrences and suitability patterns of species. 
 
+ 
+<p align="center">
+  <img src="https://github.com/sjevelazco/MSDM/blob/master/man/Figure/readme_figure.svg" />
+  <figcaption> (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
+</p>
+
 ### CITATION:
-**Mendes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. 2020. Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, *in press*.** https://doi.org/10.1016/j.ecolmodel.2020.109180
+**Mendes, P., Velazco, S. J. E., Andrade, A. F. A. de, & De Marco, P. (2020). Dealing with overprediction in species distribution models: How adding distance constraints can improve model accuracy. *Ecological Modelling*, 431, 109180.** https://doi.org/10.1016/j.ecolmodel.2020.109180
+
+## Package website
+See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazco.github.io/MSDM) for further details of [function](https://sjevelazco.github.io/MSDM/reference/index.html) and examples 
+
+
 
 
 > Test the package and give us feedback [here](https://github.com/andrefaa/MSDM/issues) or send an e-mail to sjevelazco@gmail.com.
