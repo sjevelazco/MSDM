@@ -21,7 +21,8 @@ MSDM_Priori(
 
 \item{y}{character. Column name with latitude values.}
 
-\item{sp}{character. Column name with species names.}
+\item{sp}{character. Column name with species names.  It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
+Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.}
 
 \item{method}{character. A character string indicating which MSDM the method that must be used. The next methods are available: XY, MIN, CML, and KER. Usage method = 'CML'}
 

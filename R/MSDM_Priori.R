@@ -4,7 +4,8 @@
 #' @param records data.frame. A database with geographical coordinates of species presences used to create species distribution models.
 #' @param x character. Column name with longitude values.
 #' @param y character. Column name with latitude values.
-#' @param sp character. Column name with species names.
+#' @param sp character. Column name with species names.  It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
+#' Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.
 #' @param method character. A character string indicating which MSDM the method that must be used. The next methods are available: XY, MIN, CML, and KER. Usage method = 'CML'
 #' @param rasterlayer raster object. A raster, stack, or brick object that will be used to construct species distribution models. This object will be used as a basis for creating MSDM variables with the same resolution, extent, and pattern of empty cells that the environmental variables. It is advisable to use a raster of an environmental layer that will be used in the future to create the species distribution models in order not to have problems (e.g. resolution, extent, cells with NA) between environmental and constraining raster.
 #' @param dirsave character. A character string indicating the directory where result must be saved.
