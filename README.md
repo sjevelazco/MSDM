@@ -42,7 +42,7 @@ See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazc
 
 
 
-> Test the package and give us feedback [here](https://github.com/andrefaa/MSDM/issues) or send an e-mail to sjevelazco@gmail.com.
+> Test the package and give us feedback [here](https://github.com/sjevelazco/MSDM/issues) or send an e-mail to sjevelazco@gmail.com.
 
 > MSDM package is integrated to [ENMTML](https://github.com/andrefaa/ENMTML) R package
 
