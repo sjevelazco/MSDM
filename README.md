@@ -37,7 +37,7 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 **Mendes, P., Velazco, S. J. E., Andrade, A. F. A. de, & De Marco, P. (2020). Dealing with overprediction in species distribution models: How adding distance constraints can improve model accuracy. *Ecological Modelling*, 431, 109180.** https://doi.org/10.1016/j.ecolmodel.2020.109180
 
 ## Package website
-See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazco.github.io/MSDM) for further details of [function](https://sjevelazco.github.io/MSDM/reference/index.html) and examples 
+See [MSDM](https://sjevelazco.github.io/MSDM) package website (https://sjevelazco.github.io/MSDM) for further details of [functions](https://sjevelazco.github.io/MSDM/reference/index.html) and examples 
 
 
 
