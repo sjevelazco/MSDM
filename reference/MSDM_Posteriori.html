@@ -45,6 +45,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -56,9 +58,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -85,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sjevelazco/MSDM/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -111,7 +119,7 @@
     <p>Methods to correct overprediction of species distribution models based on occurrences and suitability patterns.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>
   <span class='va'>records</span>,
   <span class='va'>absences</span>,
   x <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -123,7 +131,7 @@
     <span class='st'>"sensitivty"</span><span class='op'>)</span>,
   buffer <span class='op'>=</span> <span class='cn'>NULL</span>,
   dirsave <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,73 +245,97 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
     <div class='dont-index'><p><code><a href='MSDM_Priori.html'>MSDM_Priori</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://sjevelazco.github.io/MSDM'>MSDM</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: raster</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: sp</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sp_sdm"</span><span class='op'>)</span> <span class='co'>#continuous species distribution models of five species</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"occurrences"</span><span class='op'>)</span> <span class='co'>#presences data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"absences"</span><span class='op'>)</span> <span class='co'>#absences data</span>
-
-<span class='co'># sp_sdm is database with simple species distribution models, i.e. without any restriction method</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
-</div><div class='img'><img src='MSDM_Posteriori-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Create a temporary MSDM folder</span>
-<span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>tmdir</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span>
-<span class='va'>tmdir</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM"</div><div class='input'>
-<span class='co'># The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when</span>
-<span class='co'># using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>dir_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span>
-<span class='va'>dir_models</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM/original_sdm"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span><span class='op'>(</span><span class='va'>sp_sdm</span>, <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>dir_models</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span><span class='op'>)</span>,
-            bylayer<span class='op'>=</span><span class='cn'>TRUE</span>, format<span class='op'>=</span><span class='st'>'GTiff'</span>, overwrite<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='co'># shell.exec(dir_models)</span>
-
-
-<span class='co'># BMCP method with a single buffer for all species----</span>
-<span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>records<span class='op'>=</span><span class='va'>occurrences</span>, absences<span class='op'>=</span><span class='va'>absences</span>,
-                x<span class='op'>=</span><span class='st'>"x"</span>, y<span class='op'>=</span><span class='st'>"y"</span>, sp<span class='op'>=</span><span class='st'>"sp"</span>, method<span class='op'>=</span><span class='st'>"BMCP"</span>, buffer<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>type<span class='op'>=</span><span class='st'>"single"</span>, km<span class='op'>=</span><span class='fl'>150</span><span class='op'>)</span>,
-                dirraster <span class='op'>=</span> <span class='va'>dir_models</span>, threshold <span class='op'>=</span> <span class='st'>"spec_sens"</span>,
-                dirsave <span class='op'>=</span> <span class='va'>tmdir</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1 from 5 : SP01 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='output co'>#&gt; 2 from 5 : SP02 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='output co'>#&gt; 3 from 5 : SP03 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='output co'>#&gt; 4 from 5 : SP04 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='output co'>#&gt; 5 from 5 : SP05 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: rgeos</span></div><div class='output co'>#&gt; results are in: 
-#&gt;  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM </div><div class='input'>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='co'># Categorical models corrected by BMCP methods</span>
-<span class='va'>cat_bmcp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cat_bmcp</span><span class='op'>)</span>
-</div><div class='img'><img src='MSDM_Posteriori-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Continuous models corrected by BMCP methods</span>
-<span class='va'>con_bmcp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>con_bmcp</span><span class='op'>)</span>
-</div><div class='img'><img src='MSDM_Posteriori-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># shell.exec(rdir)</span>
-
-
-<span class='co'># OBR method----</span>
-<span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>records<span class='op'>=</span><span class='va'>occurrences</span>, absences<span class='op'>=</span><span class='va'>absences</span>,
-                x<span class='op'>=</span><span class='st'>"x"</span>, y<span class='op'>=</span><span class='st'>"y"</span>, sp<span class='op'>=</span><span class='st'>"sp"</span>, method<span class='op'>=</span><span class='st'>"OBR"</span>,
-                dirraster <span class='op'>=</span> <span class='va'>dir_models</span>, threshold <span class='op'>=</span> <span class='st'>"spec_sens"</span>,
-                dirsave <span class='op'>=</span> <span class='va'>tmdir</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM/BINr' already exists</span></div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM/CONr' already exists</span></div><div class='output co'>#&gt; 1 from 5 : SP01 
-#&gt; 2 from 5 : SP02 
-#&gt; 3 from 5 : SP03 
-#&gt; 4 from 5 : SP04 
-#&gt; 5 from 5 : SP05 
-#&gt; results are in: 
-#&gt;  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpep67hY/MSDM </div><div class='input'>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># Categorical models corrected by OBR methods</span>
-<span class='va'>cat_obr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cat_obr</span><span class='op'>)</span>
-</div><div class='img'><img src='MSDM_Posteriori-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Continuous models corrected by OBR methods</span>
-<span class='va'>con_obr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>con_obr</span><span class='op'>)</span>
-</div><div class='img'><img src='MSDM_Posteriori-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># shell.exec(rdir)</span>
-
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://sjevelazco.github.io/MSDM'>MSDM</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: raster</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: sp</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sp_sdm"</span><span class='op'>)</span> <span class='co'>#continuous species distribution models of five species</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"occurrences"</span><span class='op'>)</span> <span class='co'>#presences data</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"absences"</span><span class='op'>)</span> <span class='co'>#absences data</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># sp_sdm is database with simple species distribution models, i.e. without any restriction method</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='MSDM_Posteriori-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create a temporary MSDM folder</span></span>
+<span class='r-in'><span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tmdir</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu"</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tmdir</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when</span></span>
+<span class='r-in'><span class='co'># using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dir_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dir_models</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/original_sdm"</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span><span class='op'>(</span><span class='va'>sp_sdm</span>, <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>dir_models</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>            bylayer<span class='op'>=</span><span class='cn'>TRUE</span>, format<span class='op'>=</span><span class='st'>'GTiff'</span>, overwrite<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># shell.exec(dir_models)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># BMCP method with a single buffer for all species----</span></span>
+<span class='r-in'><span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>records<span class='op'>=</span><span class='va'>occurrences</span>, absences<span class='op'>=</span><span class='va'>absences</span>,</span>
+<span class='r-in'>                x<span class='op'>=</span><span class='st'>"x"</span>, y<span class='op'>=</span><span class='st'>"y"</span>, sp<span class='op'>=</span><span class='st'>"sp"</span>, method<span class='op'>=</span><span class='st'>"BMCP"</span>, buffer<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>type<span class='op'>=</span><span class='st'>"single"</span>, km<span class='op'>=</span><span class='fl'>150</span><span class='op'>)</span>,</span>
+<span class='r-in'>                dirraster <span class='op'>=</span> <span class='va'>dir_models</span>, threshold <span class='op'>=</span> <span class='st'>"spec_sens"</span>,</span>
+<span class='r-in'>                dirsave <span class='op'>=</span> <span class='va'>tmdir</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 from 5 : SP01 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 from 5 : SP02 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 from 5 : SP03 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 from 5 : SP04 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 from 5 : SP05 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> results are in: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># Categorical models corrected by BMCP methods</span></span>
+<span class='r-in'><span class='va'>cat_bmcp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cat_bmcp</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='MSDM_Posteriori-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># Continuous models corrected by BMCP methods</span></span>
+<span class='r-in'><span class='va'>con_bmcp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>con_bmcp</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='MSDM_Posteriori-3.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># shell.exec(rdir)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># OBR method----</span></span>
+<span class='r-in'><span class='fu'>MSDM_Posteriori</span><span class='op'>(</span>records<span class='op'>=</span><span class='va'>occurrences</span>, absences<span class='op'>=</span><span class='va'>absences</span>,</span>
+<span class='r-in'>                x<span class='op'>=</span><span class='st'>"x"</span>, y<span class='op'>=</span><span class='st'>"y"</span>, sp<span class='op'>=</span><span class='st'>"sp"</span>, method<span class='op'>=</span><span class='st'>"OBR"</span>,</span>
+<span class='r-in'>                dirraster <span class='op'>=</span> <span class='va'>dir_models</span>, threshold <span class='op'>=</span> <span class='st'>"spec_sens"</span>,</span>
+<span class='r-in'>                dirsave <span class='op'>=</span> <span class='va'>tmdir</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/BINr' already exists</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/CONr' already exists</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 from 5 : SP01 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 from 5 : SP02 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 from 5 : SP03 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 from 5 : SP04 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 from 5 : SP05 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> results are in: </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Categorical models corrected by OBR methods</span></span>
+<span class='r-in'><span class='va'>cat_obr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>cat_obr</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='MSDM_Posteriori-4.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># Continuous models corrected by OBR methods</span></span>
+<span class='r-in'><span class='va'>con_obr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>con_obr</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='MSDM_Posteriori-5.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># shell.exec(rdir)</span></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -315,11 +347,11 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 
       <footer>
       <div class="copyright">
-  <p>Developed by Poliana Mendes, Santiago J.E. Velazco, Andre F.A. Andrade, Paulo De Marco .</p>
+  <p><p>Developed by Poliana Mendes, Santiago J.E. Velazco, Andre F.A. Andrade, Paulo De Marco .</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -327,6 +359,8 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 
   
 
+
+  
 
   </body>
 </html>
