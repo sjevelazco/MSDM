@@ -29,13 +29,8 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 
  
  <a href='https://github.com/sjevelazco/MSDM'><img src="https://raw.githubusercontent.com/sjevelazco/MSDM/master/man/Figure/readme_figure.svg" align="centre" height="500"/></a>
- 
-<p align="center">
-  <img src="https://github.com/sjevelazco/MSDM/blob/master/man/Figure/readme_figure.svg" />
-  <figcaption> 
-  
-  (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
-</p>
+
+  ( a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
 
 ### CITATION:
 **Mendes, P., Velazco, S. J. E., Andrade, A. F. A. de, & De Marco, P. (2020). Dealing with overprediction in species distribution models: How adding distance constraints can improve model accuracy. *Ecological Modelling*, 431, 109180.** https://doi.org/10.1016/j.ecolmodel.2020.109180
