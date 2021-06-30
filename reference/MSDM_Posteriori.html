@@ -261,18 +261,18 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 <span class='r-in'><span class='co'># Create a temporary MSDM folder</span></span>
 <span class='r-in'><span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>tmdir</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC"</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>tmdir</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM"</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when</span></span>
 <span class='r-in'><span class='co'># using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>dir_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>dir_models</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/original_sdm"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM/original_sdm"</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span><span class='op'>(</span><span class='va'>sp_sdm</span>, <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>dir_models</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span><span class='op'>)</span>,</span>
 <span class='r-in'>            bylayer<span class='op'>=</span><span class='cn'>TRUE</span>, format<span class='op'>=</span><span class='st'>'GTiff'</span>, overwrite<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># shell.exec(dir_models)</span></span>
@@ -294,7 +294,7 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5 from 5 : SP05 </span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required namespace: rgeos</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> results are in: </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># Categorical models corrected by BMCP methods</span></span>
@@ -313,15 +313,15 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 <span class='r-in'>                x<span class='op'>=</span><span class='st'>"x"</span>, y<span class='op'>=</span><span class='st'>"y"</span>, sp<span class='op'>=</span><span class='st'>"sp"</span>, method<span class='op'>=</span><span class='st'>"OBR"</span>,</span>
 <span class='r-in'>                dirraster <span class='op'>=</span> <span class='va'>dir_models</span>, threshold <span class='op'>=</span> <span class='st'>"spec_sens"</span>,</span>
 <span class='r-in'>                dirsave <span class='op'>=</span> <span class='va'>tmdir</span><span class='op'>)</span></span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/BINr' already exists</span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM/CONr' already exists</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM/BINr' already exists</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>'/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM/CONr' already exists</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1 from 5 : SP01 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2 from 5 : SP02 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 3 from 5 : SP03 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 4 from 5 : SP04 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5 from 5 : SP05 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> results are in: </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZ2N3Iu/MSDM </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmp8qr5ZC/MSDM </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.dirs</a></span><span class='op'>(</span><span class='va'>tmdir</span>, recursive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span class='r-in'></span>
