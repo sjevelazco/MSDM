@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,7 +91,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sjevelazco/MSDM/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -117,15 +117,15 @@
     <p>This function creates rasters that, together with environmental variables, can be used to construct constrained species distribution models spatial</p>
     </div>
 
-    <pre class="usage"><span class='fu'>MSDM_Priori</span>(
-  <span class='no'>records</span>,
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XY"</span>, <span class='st'>"MIN"</span>, <span class='st'>"CML"</span>, <span class='st'>"KER"</span>),
-  <span class='kw'>rasterlayer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dirsave</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>MSDM_Priori</span><span class='op'>(</span>
+  <span class='va'>records</span>,
+  x <span class='op'>=</span> <span class='cn'>NA</span>,
+  y <span class='op'>=</span> <span class='cn'>NA</span>,
+  sp <span class='op'>=</span> <span class='cn'>NA</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XY"</span>, <span class='st'>"MIN"</span>, <span class='st'>"CML"</span>, <span class='st'>"KER"</span><span class='op'>)</span>,
+  rasterlayer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dirsave <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,8 +144,8 @@
     </tr>
     <tr>
       <th>sp</th>
-      <td><p>character. Column name with species names.  It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
-Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin &amp; Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.</p></td>
+      <td><p>character. Column name with species names.  It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g., Alchornea_glandulosa).
+Do not use author names, symbols, or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin &amp; Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. The species names and the raster must be the same.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -153,26 +153,26 @@ Do not use author names, symbols or accents. For example, substitute names like 
     </tr>
     <tr>
       <th>rasterlayer</th>
-      <td><p>raster object. A raster, stack, or brick object that will be used to construct species distribution models. This object will be used as a basis for creating MSDM variables with the same resolution, extent, and pattern of empty cells that the environmental variables. It is advisable to use a raster of an environmental layer that will be used in the future to create the species distribution models in order not to have problems (e.g. resolution, extent, cells with NA) between environmental and constraining raster.</p></td>
+      <td><p>raster object. A raster, stack, or brick object used to construct species distribution models. This object will be used to create MSDM variables with the same resolution, extent, and pattern of empty cells that the environmental variables. It is advisable to use a raster of an environmental layer that will be used in the future to create the species distribution models in order not to have problems (e.g., resolution, extent, cells with NA) between environmental and constraining raster.</p></td>
     </tr>
     <tr>
       <th>dirsave</th>
-      <td><p>character. A character string indicating the directory where result must be saved.</p></td>
+      <td><p>character. A character string indicating the directory where the result must be saved.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function save raster files (with geotiff format) in a folder named with the MSDM method. Such raster/s have to be used as covariate together with environmental variables at the moment to construct species distribution models. A pair of raster layers are created for all species set for XY method; on the contrary, CML, MIN, and KER create a species-specific raster layer.</p>
+    <p>This function saves raster files (with geotiff format) in a folder named with the MSDM method. Such raster/s have to be used together with environmental variables at the moment to construct species distribution models. The XY approach creates a single pair of raster layers that can be used for all species that share the same study region. Otherwise, CML, MIN, and KER create a species-specific raster layer.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>XY (Latlong method). It assumes that spatial structure can partially explain species distribution (Bahn &amp; Mcgill, 2007). Two raster layers will be created, containing the latitude and longitude of pixels in decimal degrees, respectively. These raster layers should be included as covariates with the environmental layers to construct species distribution models.</p>
 
-<p>MIN (Nearest neighbour distance). Compiled and adapted from Allouche et al. (2008), this method calculates for each cel the Euclidian geographic distance to the nearest presence point.</p>
+<p>MIN (Nearest neighbor distance). Compiled and adapted from Allouche et al. (2008), this method calculates for each cel the Euclidian geographic distance to the nearest presence point.</p>
 
 <p>CML (Cumulative distance method). Compiled and adapted from Allouche et al. (2008), it assumes that pixels closer to presences are likely included in species distributions. A raster layer will be created containing the sum of Euclidian geographic distances from each pixel to all occurrences of a species. Obtained values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.</p>
 
-<p>KER (Kernel method). Also compiled and adapted from Allouche et al. (2008), this method, like CML, assumes that pixels located in areas with a higher density of occurrences are likely included in the actual species distribution. A raster layer will be created containing the Gaussian values based on the density of occurrences of a species. Standard deviation of the Gaussian distribution was the maximum value in a vector of minimum distances between pairs of occurrences of a species. Gaussian values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.</p>
+<p>KER (Kernel method). Also compiled and adapted from Allouche et al. (2008), this method, like CML, assumes that pixels located in areas with a higher density of occurrences are likely included in the actual species distribution. Therefore, a raster layer will be created containing the Gaussian values based on the density of occurrences of a species. The standard deviation of the Gaussian distribution was the maximum value in a vector of minimum distances between pairs of occurrences of a species. Gaussian values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.</p>
 
 <p>Further methodological and performance information of these methods see Mendes et al. (2020).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -189,55 +189,61 @@ Do not use author names, symbols or accents. For example, substitute names like 
     <div class='dont-index'><p><code><a href='MSDM_Posteriori.html'>MSDM_Posteriori</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>MSDM</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://sjevelazco.github.io/MSDM'>MSDM</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
 
 <span class='co'># Raster data and a data.frame with occurrences will be loaded</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"sp_sdm"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"occurrences"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span>(<span class='no'>occurrences</span>)</div><div class='output co'>#&gt;     sp          x        y
-#&gt; 1 SP01  -87.54180 13.95804
-#&gt; 2 SP01 -103.54173 21.29134
-#&gt; 3 SP01 -101.87507 20.95801
-#&gt; 4 SP01  -99.70841 24.87466
-#&gt; 5 SP01 -100.37508 30.29131
-#&gt; 6 SP01 -100.20841 20.70801</div><div class='input'>
-<span class='co'># Some changes will be done on sp_sdm object to be used as example</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>sp_sdm</span>)</div><div class='img'><img src='MSDM_Priori-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>sp_sdm</span>)</div><div class='output co'>#&gt; [1] "RasterBrick"
-#&gt; attr(,"package")
-#&gt; [1] "raster"</div><div class='input'><span class='no'>sp_sdm</span> <span class='kw'>&lt;-</span> <span class='no'>sp_sdm</span><span class='kw'>[[</span><span class='fl'>1</span>]] <span class='co'># a layer of this RasterBrick will be selected</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>sp_sdm</span>)</div><div class='output co'>#&gt; [1] "RasterLayer"
-#&gt; attr(,"package")
-#&gt; [1] "raster"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>sp_sdm</span>)</div><div class='img'><img src='MSDM_Priori-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sp_sdm"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"occurrences"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/headtail.html'>head</a></span><span class='op'>(</span><span class='va'>occurrences</span><span class='op'>)</span>
 
-<span class='no'>tmdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>()
-<span class='no'>tmdir</span> <span class='co'># temporal directory where will be saves raster layers</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp8yrgAu"</div><div class='input'>
-<span class='fu'>MSDM_Priori</span>(<span class='kw'>records</span> <span class='kw'>=</span> <span class='no'>occurrences</span>,
-            <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='st'>"sp"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"XY"</span>,
-            <span class='kw'>rasterlayer</span> <span class='kw'>=</span> <span class='no'>sp_sdm</span>, <span class='kw'>dirsave</span> <span class='kw'>=</span> <span class='no'>tmdir</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NOT UPDATED FOR PROJ &gt;= 6</span></div><div class='output co'>#&gt; results are in: 
-#&gt;  C:\Users\santi\AppData\Local\Temp\Rtmp8yrgAu/MSDM_XY </div><div class='input'>
+<span class='co'># Some changes will be done on sp_sdm object to be used as example</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
+<span class='va'>sp_sdm</span> <span class='op'>&lt;-</span> <span class='va'>sp_sdm</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='co'># a layer of this RasterBrick will be selected</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
+
+
+<span class='va'>tmdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>tmdir</span> <span class='co'># temporal directory where will be saves raster layers</span>
+
+<span class='co'># # XY method----</span>
+<span class='fu'>MSDM_Priori</span><span class='op'>(</span>
+  records <span class='op'>=</span> <span class='va'>occurrences</span>,
+  x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span>, sp <span class='op'>=</span> <span class='st'>"sp"</span>, method <span class='op'>=</span> <span class='st'>"XY"</span>,
+  rasterlayer <span class='op'>=</span> <span class='va'>sp_sdm</span>, dirsave <span class='op'>=</span> <span class='va'>tmdir</span>
+<span class='op'>)</span>
+
 <span class='co'># open directory were raster were saved</span>
-<span class='no'>rdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>tmdir</span>, <span class='st'>"MSDM_XY"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>'/'</span>)
-<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp8yrgAu/MSDM_XY"</div><div class='input'>
+<span class='va'>rdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM_XY"</span>, sep <span class='op'>=</span> <span class='st'>"/"</span><span class='op'>)</span>
+<span class='va'>rdir</span>
+
 <span class='co'># plot results</span>
-<span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>rdir</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>".tif"</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span>(<span class='no'>new_var</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>new_var</span>)</div><div class='img'><img src='MSDM_Priori-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>new_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>rdir</span>, pattern <span class='op'>=</span> <span class='st'>".tif"</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>new_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='va'>new_var</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>new_var</span><span class='op'>)</span>
+
 
 <span class='co'># CML method----</span>
-<span class='fu'>MSDM_Priori</span>(<span class='kw'>records</span> <span class='kw'>=</span> <span class='no'>occurrences</span>,
-            <span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='st'>"sp"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"CML"</span>,
-            <span class='kw'>rasterlayer</span> <span class='kw'>=</span> <span class='no'>sp_sdm</span>, <span class='kw'>dirsave</span> <span class='kw'>=</span> <span class='no'>tmdir</span>)</div><div class='output co'>#&gt; results are in: 
-#&gt;  C:\Users\santi\AppData\Local\Temp\Rtmp8yrgAu/MSDM_CML </div><div class='input'>
+<span class='fu'>MSDM_Priori</span><span class='op'>(</span>
+  records <span class='op'>=</span> <span class='va'>occurrences</span>,
+  x <span class='op'>=</span> <span class='st'>"x"</span>, y <span class='op'>=</span> <span class='st'>"y"</span>, sp <span class='op'>=</span> <span class='st'>"sp"</span>, method <span class='op'>=</span> <span class='st'>"CML"</span>,
+  rasterlayer <span class='op'>=</span> <span class='va'>sp_sdm</span>, dirsave <span class='op'>=</span> <span class='va'>tmdir</span>
+<span class='op'>)</span>
+
 <span class='co'># open directory were raster were saved</span>
-<span class='no'>rdir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>tmdir</span>, <span class='st'>"MSDM_CML"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>'/'</span>)
-<span class='no'>rdir</span></div><div class='output co'>#&gt; [1] "C:\\Users\\santi\\AppData\\Local\\Temp\\Rtmp8yrgAu/MSDM_CML"</div><div class='input'><span class='co'># shell.exec(rdir)</span>
+<span class='va'>rdir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"MSDM_CML"</span>, sep <span class='op'>=</span> <span class='st'>"/"</span><span class='op'>)</span>
+<span class='va'>rdir</span>
+<span class='co'># shell.exec(rdir)</span>
 
 <span class='co'># plot results</span>
-<span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>rdir</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='st'>".tif"</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>new_var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span>(<span class='no'>new_var</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>new_var</span>)</div><div class='img'><img src='MSDM_Priori-4.png' alt='' width='700' height='433' /></div><div class='input'># Note that a raster is created for each species
-
+<span class='va'>new_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='va'>rdir</span>, pattern <span class='op'>=</span> <span class='st'>".tif"</span>, full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>new_var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='va'>new_var</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>new_var</span><span class='op'>)</span>
+<span class='co'># Note that a raster is created for each species</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>
@@ -255,7 +261,7 @@ Do not use author names, symbols or accents. For example, substitute names like 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
