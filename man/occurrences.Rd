@@ -3,7 +3,7 @@
 \docType{data}
 \name{occurrences}
 \alias{occurrences}
-\title{Virtual species occurrences.}
+\title{A dataset containing presences of five virtual species}
 \format{
 A data frame with 250 rows and 3 variables:
 \describe{
@@ -17,6 +17,6 @@ A data frame with 250 rows and 3 variables:
 occurrences
 }
 \description{
-A dataset containing occurrences of 5 virtual species
+A dataset containing presences of five virtual species
 }
 \keyword{datasets}

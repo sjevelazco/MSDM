@@ -1,10 +1,10 @@
 Package: MSDM
 Type: Package
 Title: Methods to deal with overprediction of species distribution models
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: 
     c(person(given = "Poliana",
-           family = "Medes",
+           family = "Mendes",
            role = c("aut"),
            comment = c(ORCID = "0000-0001-6061-3245")),
       person(given = "Santiago J.E.",
@@ -24,8 +24,8 @@ Maintainer: Santiago J.E. Velazco <sjevelazco@gmail.com>
 Description: A collection of methods for reducing overprediction of species distribution models.
 License: GPL (>= 2)
 Depends: R (>= 3.5.0)
-Imports: raster, rgdal, flexclust, sp, dismo, geosphere, methods
-URL: https://github.com/sjevelazco/MSDM
+Imports: raster, rgdal, flexclust, sp, dismo, geosphere, methods, igraph
+URL: https://sjevelazco.github.io/MSDM, https://github.com/sjevelazco/MSDM
 BugReports: https://github.com/sjevelazco/MSDM/issues
 Encoding: UTF-8
 LazyData: true

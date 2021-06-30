@@ -3,7 +3,7 @@
 \docType{data}
 \name{absences}
 \alias{absences}
-\title{Virtual species absences}
+\title{A dataset containing absences of five virtual species}
 \format{
 A data frame with 250 rows and 3 variables:
 \describe{
@@ -17,6 +17,6 @@ A data frame with 250 rows and 3 variables:
 absences
 }
 \description{
-A dataset containing absences of 5 virtual species
+A dataset containing absences of five virtual species
 }
 \keyword{datasets}

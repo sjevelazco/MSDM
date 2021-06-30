@@ -1,58 +1,60 @@
-#' Create spatial predictor variables to correct overprediction of species distribution models
+#' Create spatial predictor variables to reduce overprediction of species distribution models
 #'
+#' @description This function creates rasters that, together with environmental variables, can be used to construct constrained species distribution models spatial
 #' @param records data.frame. A database with geographical coordinates of species presences used to create species distribution models.
 #' @param x character. Column name with longitude values.
 #' @param y character. Column name with latitude values.
-#' @param sp character. Column name with species names.
-#' @param method character. A character string indicating which MSDM method must be used create.
-#' @param rasterlayer raster object. A raster, stack or brick object that will be used to construct species distribution models. This object will be used as a basis for creating MSDM variables with the same resolution, extent and pattern of empty cell that the environmental variables.
+#' @param sp character. Column name with species names.  It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
+#' Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.
+#' @param method character. A character string indicating which MSDM the method that must be used. The next methods are available: XY, MIN, CML, and KER. Usage method = 'CML'
+#' @param rasterlayer raster object. A raster, stack, or brick object that will be used to construct species distribution models. This object will be used as a basis for creating MSDM variables with the same resolution, extent, and pattern of empty cells that the environmental variables. It is advisable to use a raster of an environmental layer that will be used in the future to create the species distribution models in order not to have problems (e.g. resolution, extent, cells with NA) between environmental and constraining raster.
 #' @param dirsave character. A character string indicating the directory where result must be saved.
-#' @return This function save raster files (with geotiff format) in a folder named with the MSDM method. Such raster have to be used as covariate together with environmental variables at moment to construct species distribution models. A pair of raster layer are created for all species set for XY method, on the contrary, CML and KER create a specific raster layer for each species.
+#' @return This function save raster files (with geotiff format) in a folder named with the MSDM method. Such raster/s have to be used as covariate together with environmental variables at the moment to construct species distribution models. A pair of raster layers are created for all species set for XY method; on the contrary, CML, MIN, and KER create a species-specific raster layer.
 #'
-#' @details 	XY (Latlong method). It assumes that spatial structure can partially explain
-#' species distribution (Bahn & Mcgill, 2007). Two raster layers will be created,
-#' containing the latitude and longitude of pixels in decimal degrees respectively.
-#' These raster layers should be included as covariates with the environmental layers to construct species distribution models.
+#' @details
+#' XY (Latlong method). It assumes that spatial structure can partially explain species distribution (Bahn & Mcgill, 2007). Two raster layers will be created, containing the latitude and longitude of pixels in decimal degrees, respectively. These raster layers should be included as covariates with the environmental layers to construct species distribution models.
 #'
 #'
-#' CML (Cumulative distance method). Compiled and adapted from Allouche et al., (2008), it assumes that
-#' pixels closer to presences are likely included in species distributions.
-#' A raster layer will be created containing the sum of Euclidian geographic distances
-#' from each pixel to all occurrences of a species. Obtained values are normalized to
-#' vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.
+#' MIN (Nearest neighbour distance). Compiled and adapted from Allouche et al. (2008), this method calculates for each cel the Euclidian geographic distance to the nearest presence point.
 #'
 #'
-#' KER (Kernel method). Also compiled and adapted from Allouche et al. (2008), this method,
-#' alike CML, assumes that pixels located in areas with higher density of occurrences are
-#' likely included in the actual species distribution. A raster layer was created containing
-#' the Gaussian value based in the density of occurrences of a species. Standard deviation
-#' of the Gaussian distribution was the maximum value in a vector of minimum distances between
-#' pairs of occurrences of a species. Gaussian values are normalized to vary from zero to one.
-#' This raster layer should be included as covariates with the environmental layers to construct species distribution models.
+#' CML (Cumulative distance method). Compiled and adapted from Allouche et al. (2008), it assumes that pixels closer to presences are likely included in species distributions. A raster layer will be created containing the sum of Euclidian geographic distances from each pixel to all occurrences of a species. Obtained values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.
 #'
+#'
+#' KER (Kernel method). Also compiled and adapted from Allouche et al. (2008), this method, like CML, assumes that pixels located in areas with a higher density of occurrences are likely included in the actual species distribution. A raster layer will be created containing the Gaussian values based on the density of occurrences of a species. Standard deviation of the Gaussian distribution was the maximum value in a vector of minimum distances between pairs of occurrences of a species. Gaussian values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.
+#'
+#'
+#' Further methodological and performance information of these methods see Mendes et al. (2020).
 #'
 #'@references
 #'\itemize{
-#'\item Allouche, O., Steinitz, O., Rotem, D., Rosenfeld, A., & Kadmon, R. (2008a). Incorporating distance constraints into species distribution models. Journal of Applied Ecology, 45(2), 599-609. doi:10.1111/j.1365-2664.2007.01445.x
-#'\item Bahn, V., & Mcgill, B. J. (2007). Can niche-based distribution models outperform spatial interpolation? Global Ecology and Biogeography, 16(6), 733-742. doi:10.1111/j.1466-8238.2007.00331.x
+#'\item Mendes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in species distribution models: how adding distance constraints can improve model accuracy, Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
+#'\item Allouche, O.; Steinitz, O.; Rotem, D.; Rosenfeld, A.; Kadmon, R. (2008). Incorporating distance constraints into species distribution models. Journal of Applied Ecology, 45(2), 599-609. doi:10.1111/j.1365-2664.2007.01445.x
+#'\item Bahn, V.; Mcgill, B. J. (2007). Can niche-based distribution models outperform spatial interpolation? Global Ecology and Biogeography, 16(6), 733-742. doi:10.1111/j.1466-8238.2007.00331.x
 #'}
-
-
-
+#'
+#'
 #'@examples
 #' library(MSDM)
 #' library(raster)
 #'
+#' # Raster data and a data.frame with occurrences will be loaded
 #' data("sp_sdm")
 #' data("occurrences")
-#'
-#' plot(sp_sdm)
 #' head(occurrences)
+#'
+#' # Some changes will be done on sp_sdm object to be used as example
+#' plot(sp_sdm)
+#' class(sp_sdm)
+#' sp_sdm <- sp_sdm[[1]] # a layer of this RasterBrick will be selected
+#' class(sp_sdm)
+#' plot(sp_sdm)
+#'
 #'
 #' tmdir <- tempdir()
 #' tmdir # temporal directory where will be saves raster layers
 #'
-#' # XY method----
+# # XY method----
 #' MSDM_Priori(records = occurrences,
 #'             x = "x", y = "y", sp = "sp", method = "XY",
 #'             rasterlayer = sp_sdm, dirsave = tmdir)
@@ -60,12 +62,12 @@
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_XY", sep = '/')
 #' rdir
-#' shell.exec(rdir)
 #'
-#' # read new MSDM layers
+#' # plot results
 #' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
 #' new_var <- stack(new_var)
 #' plot(new_var)
+#'
 #'
 #' # CML method----
 #' MSDM_Priori(records = occurrences,
@@ -75,43 +77,14 @@
 #' # open directory were raster were saved
 #' rdir <- paste(tmdir, "MSDM_CML", sep = '/')
 #' rdir
-#' shell.exec(rdir)
+#' # shell.exec(rdir)
 #'
-#' # read new MSDM layers
+#' # plot results
 #' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
 #' new_var <- stack(new_var)
 #' plot(new_var)
+#' # Note that a raster is created for each species
 #'
-#' # MIN method----
-#' MSDM_Priori(records = occurrences,
-#'             x = "x", y = "y", sp = "sp", method = "MIN",
-#'             rasterlayer = sp_sdm, dirsave = tmdir)
-#'
-#' # open directory were raster were saved
-#' rdir <- paste(tmdir, "MSDM_MIN", sep = '/')
-#' rdir
-#' shell.exec(rdir)
-#'
-#' # read new MSDM layers
-#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
-#' new_var <- stack(new_var)
-#' plot(new_var)
-#'
-#'
-#' # KER methods----
-#' MSDM_Priori(records = occurrences,
-#'             x = "x", y = "y", sp = "sp", method = "KER",
-#'             rasterlayer = sp_sdm, dirsave = tmdir)
-#'
-#' # open directory were raster were saved
-#' rdir <- paste(tmdir, "MSDM_KER", sep = '/')
-#' rdir
-#' shell.exec(rdir)
-#'
-# # read new MSDM layers
-#' new_var <- list.files(rdir, pattern = ".tif", full.names = TRUE)
-#' new_var <- stack(new_var)
-#' plot(new_var)
 #'
 #' @import raster
 #' @import rgdal
@@ -302,6 +275,8 @@ MSDM_Priori <- function(records,
       spdist[!is.na(spdist[])] <- distr2
       result[[b]] <- spdist
     }
+    result <- lapply(result, function(x)
+      (x - raster::cellStats(x, min)) / (raster::cellStats(x, max) - raster::cellStats(x, min)))
     result <- raster::stack(result)
     names(result) <- names(Species)
     rm(spdist)
@@ -320,5 +295,5 @@ MSDM_Priori <- function(records,
         overwrite = TRUE)
     }
   }
-  return(dir_pri)
+  cat('results are in: \n', dir_pri, '\n')
 }
