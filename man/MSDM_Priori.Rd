@@ -40,7 +40,7 @@ This function creates rasters that, together with environmental variables, can b
 XY (Latlong method). It assumes that spatial structure can partially explain species distribution (Bahn & Mcgill, 2007). Two raster layers will be created, containing the latitude and longitude of pixels in decimal degrees, respectively. These raster layers should be included as covariates with the environmental layers to construct species distribution models.
 
 
-MIN (Nearest neighbor distance). Compiled and adapted from Allouche et al. (2008), this method calculates for each cel the Euclidian geographic distance to the nearest presence point.
+MIN (Nearest neighbor distance). Compiled and adapted from Allouche et al. (2008), this method calculates for each cell the Euclidian geographic distance to the nearest presence point.
 
 
 CML (Cumulative distance method). Compiled and adapted from Allouche et al. (2008), it assumes that pixels closer to presences are likely included in species distributions. A raster layer will be created containing the sum of Euclidian geographic distances from each pixel to all occurrences of a species. Obtained values are normalized to vary from zero to one. This raster layer should be included as covariates with the environmental layers to construct species distribution models.

@@ -87,7 +87,8 @@
 #' data("occurrences") # presences data
 #' data("absences") # absences data
 #'
-#' # sp_sdm is database with simple species distribution models, i.e. without any restriction method
+#' # sp_sdm is database with simple species distribution models,
+#' # i.e. without any restriction method
 #' plot(sp_sdm)
 #'
 #' # Create a temporary MSDM folder
@@ -98,7 +99,8 @@
 #' tmdir
 #'
 #' # The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when
-#' # using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species
+#' # using your data, it is just to make this example reproducible. When you use your own data,
+#' # it will be enough to have a folder with your model of the species
 #' dir.create(file.path(tmdir, "original_sdm"))
 #' dir_models <- file.path(tmdir, "original_sdm")
 #' dir_models
