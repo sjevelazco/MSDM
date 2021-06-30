@@ -28,9 +28,13 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 *.* **`MSDM_Posteriori`**: provides four methods, named *OBR*, *PRES*, *LQ*, *MCP*, and *BMCP*. These methods reduce overprediction of species distribution models already fitted based on the occurrences and suitability patterns of species. 
 
  
+ <a href='https://github.com/sjevelazco/MSDM'><img src="https://raw.githubusercontent.com/sjevelazco/MSDM/master/man/Figure/readme_figure.svg" align="centre" height="500"/></a>
+ 
 <p align="center">
   <img src="https://github.com/sjevelazco/MSDM/blob/master/man/Figure/readme_figure.svg" />
-  <figcaption> (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
+  <figcaption> 
+  
+  (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods </figcaption>
 </p>
 
 ### CITATION:

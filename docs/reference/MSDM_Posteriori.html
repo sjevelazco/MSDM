@@ -250,7 +250,8 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"occurrences"</span><span class='op'>)</span> <span class='co'># presences data</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"absences"</span><span class='op'>)</span> <span class='co'># absences data</span>
 
-<span class='co'># sp_sdm is database with simple species distribution models, i.e. without any restriction method</span>
+<span class='co'># sp_sdm is database with simple species distribution models,</span>
+<span class='co'># i.e. without any restriction method</span>
 <span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sp_sdm</span><span class='op'>)</span>
 
 <span class='co'># Create a temporary MSDM folder</span>
@@ -261,7 +262,8 @@ Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
 <span class='va'>tmdir</span>
 
 <span class='co'># The data of sp_sdm will be saved in a folder in the tmdir. This is not necessary when</span>
-<span class='co'># using your data, it is just to make this example reproducible. When you use your own data, it will be enough to have a folder with your model of the species</span>
+<span class='co'># using your data, it is just to make this example reproducible. When you use your own data,</span>
+<span class='co'># it will be enough to have a folder with your model of the species</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>dir_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmdir</span>, <span class='st'>"original_sdm"</span><span class='op'>)</span>
 <span class='va'>dir_models</span>

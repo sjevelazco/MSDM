@@ -33,11 +33,9 @@ MSDM provides tools to correct or reduce overprediction of species distribution 
 See [here](https://sjevelazco.github.io/MSDM/reference/index.html) for further details of function and examples 
 
  
-```{r, echo=FALSE}
-# Define variable containing url
-url <- "https://raw.githubusercontent.com/sjevelazco/MSDM/master/man/Figure/readme_figure.svg"
-```
-<center><img src="`r url`"></center>
+<a href='https://github.com/sjevelazco/MSDM'><img src="https://raw.githubusercontent.com/sjevelazco/MSDM/master/man/Figure/readme_figure.svg" align="centre" height="500"/></a>
+
+
 (a) Example of suitability pattern of an SDM based on a generalized linear model (GLM) constructed without spatial restriction and (b) different A priori and A posteriori MSDM methods
 
 ### CITATION:
