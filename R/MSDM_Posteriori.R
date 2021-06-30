@@ -1,34 +1,34 @@
 #' Methods to correct overprediction of species distribution models based on occurrences and suitability patterns.
 #'
+#' @description These methods reduce overprediction of species distribution models based on the combination of the patterns of species occurrences and predicted suitability
 #' @param records data.frame. A database with geographical coordinates of species presences used to create species distribution models.
 #' @param absences data.frame. A database with geographical coordinates of species absences used to create species distribution models.
 #' @param x character. Column name with longitude values. This name must be the same for presences and absences database.
 #' @param y character. Column name with latitude values. This name must be the same for presences and absences database.
-#' @param sp character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e. species distribution) databases. It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
-#' Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.
+#' @param sp character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e., species distribution) databases. It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g., Alchornea_glandulosa).
+#' Do not use author names, symbols, or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. The species names and the raster must be the same.
 #' @param method character. A character string indicating which MSDM method must be used create.
-#' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models. It is mandatory that the species names and the raster are the same (see comments about species names format in 'sp' argument ). Raster layer must be in geotiff format.
+#' @param dirraster character. A character string indicating the directory where are species raster files, i.e. species distribution models. The species names and the raster must be the same (see comments about species names format in 'sp' argument ). Raster layer must be in geotiff format.
 #' @param threshold character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
-#' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.
-#' @param buffer character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
-#' "species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrences of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").
+#' to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", which is the threshold at which sensitivity and specificity are equal.
+#' @param buffer character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species; this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
+#' "species_specific" type calculates the minimum pairwise-distances between all occurrences and then selects the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence of each species' occurrences; thus, for each species, a value of buffer width will be calculated (usage buffer="species_specific").
 #' @param dirsave character. A character string indicating the directory where result must be saved.
 #' @return This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
-
 #' @details
 #'
 #'
-#'Abbreviation list
+#' Abbreviation list
 #'
-#'\itemize{
-#'\item SDM: species distribution model
-#'\item l: suitability patches that intercept species occurrences
-#'\item k: suitability patches that do not intercept species occurrences
-#'\item T: threshold distances used to select suitability patches
-#'}
+#' \itemize{
+#' \item SDM: species distribution model
+#' \item l: suitability patches that intercept species occurrences
+#' \item k: suitability patches that do not intercept species occurrences
+#' \item T: threshold distances used to select suitability patches
+#' }
 #'
 #'
-#'These methods reduce overprediction of species distribution models already fitted
+#' These methods reduce overprediction of species distribution models already fitted
 #' based on the occurrences and suitability patterns of species
 #' (see 'threshold' arguments)
 #'
@@ -51,7 +51,7 @@
 #' LQ (Lower Quantile). This method is similar to the OBR method, except by the
 #' procedure to define a distance threshold to withdrawn k patches, which is the
 #' lower quartile distance between k patches to the closest l patch. Whenever a suitable
-#' pixel is within a k patch, i.e. not within this lower quartile, the suitability of the
+#' pixel is within a k patch, i.e., not within this lower quartile, the suitability of the
 #' pixel is reduced to zero. This means that 75% of k patches were withdrawn from the model (Mendes et al., 2020).
 #'
 #' MCP (Minimum Convex Polygon). Compiled and adapted from
@@ -60,32 +60,32 @@
 #' with interior angles smaller than 180, enclosing all occurrences of a species.
 #'
 #' BMCP (Buffered Minimum Convex Polygon). Compiled and adapted
-#' from Kremen et al. (2008), it is alike the MCP except by the inclusion of a
+#' from Kremen et al. (2008), it is similar to the MCP except by the inclusion of a
 #' buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer argument
 #' function will ask for a value in km to be used as the buffer with. When used "species_specific" a buffer will be calculated for each species based on the presences occurrences patterns, assuming as buffer width
 #' the maximum distance in a vector of minimal pairwise distances between occurrences.
 #'
 #' Further methodological and performance information of these methods see Mendes et al. (2020).
 #'
-#'@references
-#'\itemize{
-#'\item Mendes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in
-#'species distribution models: how adding distance constraints can improve model accuracy,
-#'Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
-#'\item Kremen, C., Cameron, A., Moilanen, A., Phillips, S. J., Thomas, C. D.,
-#'Beentje, H., . Zjhra, M. L. (2008). Aligning Conservation Priorities Across
-#'Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
-#'222-226. doi:10.1126/science.1155193
-#'}
+#' @references
+#' \itemize{
+#' \item Mendes, P.; Velazco S.J.E.; Andrade, A.F.A.; De Marco, P. (2020) Dealing with overprediction in
+#' species distribution models: how adding distance constraints can improve model accuracy,
+#' Ecological Modelling, in press. https://doi.org/10.1016/j.ecolmodel.2020.109180
+#' \item Kremen, C., Cameron, A., Moilanen, A., Phillips, S. J., Thomas, C. D.,
+#' Beentje, H., . Zjhra, M. L. (2008). Aligning Conservation Priorities Across
+#' Taxa in Madagascar with High-Resolution Planning Tools. Science, 320(5873),
+#' 222-226. doi:10.1126/science.1155193
+#' }
 #'
 #'
 #' @examples
-#'
+#' \dontrun{
 #' require(MSDM)
 #' require(raster)
-#' data("sp_sdm") #continuous species distribution models of five species
-#' data("occurrences") #presences data
-#' data("absences") #absences data
+#' data("sp_sdm") # continuous species distribution models of five species
+#' data("occurrences") # presences data
+#' data("absences") # absences data
 #'
 #' # sp_sdm is database with simple species distribution models, i.e. without any restriction method
 #' plot(sp_sdm)
@@ -103,15 +103,18 @@
 #' dir_models <- file.path(tmdir, "original_sdm")
 #' dir_models
 #' writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)),
-#'             bylayer=TRUE, format='GTiff', overwrite=TRUE)
+#'   bylayer = TRUE, format = "GTiff", overwrite = TRUE
+#' )
 #' # shell.exec(dir_models)
 #'
 #'
 #' # BMCP method with a single buffer for all species----
-#' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="BMCP", buffer=c(type="single", km=150),
-#'                 dirraster = dir_models, threshold = "spec_sens",
-#'                 dirsave = tmdir)
+#' MSDM_Posteriori(
+#'   records = occurrences, absences = absences,
+#'   x = "x", y = "y", sp = "sp", method = "BMCP", buffer = c(type = "single", km = 150),
+#'   dirraster = dir_models, threshold = "spec_sens",
+#'   dirsave = tmdir
+#' )
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
 #' # Categorical models corrected by BMCP methods
@@ -124,10 +127,12 @@
 #'
 #'
 #' # OBR method----
-#' MSDM_Posteriori(records=occurrences, absences=absences,
-#'                 x="x", y="y", sp="sp", method="OBR",
-#'                 dirraster = dir_models, threshold = "spec_sens",
-#'                 dirsave = tmdir)
+#' MSDM_Posteriori(
+#'   records = occurrences, absences = absences,
+#'   x = "x", y = "y", sp = "sp", method = "OBR",
+#'   dirraster = dir_models, threshold = "spec_sens",
+#'   dirsave = tmdir
+#' )
 #'
 #' d <- list.dirs(tmdir, recursive = FALSE)
 #'
@@ -138,6 +143,7 @@
 #' con_obr <- stack(list.files(d[2], full.names = TRUE))
 #' plot(con_obr)
 #' # shell.exec(rdir)
+#' }
 #'
 #' @import raster
 #' @import rgdal
@@ -156,15 +162,17 @@ MSDM_Posteriori <- function(records,
                             x = NA,
                             y = NA,
                             sp = NA,
-                            method = c('OBR', 'PRES', 'LQ', 'MCP', 'BMCP'),
+                            method = c("OBR", "PRES", "LQ", "MCP", "BMCP"),
                             dirraster = NULL,
-                            threshold = c('kappa',
-                                          'spec_sens',
-                                          'no_omission',
-                                          'prevalence',
-                                          'equal_sens_spec',
-                                          'sensitivty'),
-                            buffer=NULL,
+                            threshold = c(
+                              "kappa",
+                              "spec_sens",
+                              "no_omission",
+                              "prevalence",
+                              "equal_sens_spec",
+                              "sensitivty"
+                            ),
+                            buffer = NULL,
                             dirsave = NULL) {
   if (any(is.na(c(x, y, sp)))) {
     stop("Complete 'x', 'y' or 'sp' arguments")
@@ -175,7 +183,7 @@ MSDM_Posteriori <- function(records,
   if (is.null(dirsave)) {
     stop("Complete 'dirsave' argument")
   }
-  if(method=='BMCP'&is.null(buffer)){
+  if (method == "BMCP" & is.null(buffer)) {
     stop("If BMCP method is used it is necessary to fill the 'buffer' argument, see the help of this function")
   }
   # if((bynarymodels==FALSE & is.null(threshold))){
@@ -183,12 +191,12 @@ MSDM_Posteriori <- function(records,
   # }
   if (any(
     threshold == c(
-      'kappa',
-      'spec_sens',
-      'no_omission',
-      'prevalence',
-      'equal_sens_spec',
-      'sensitivty'
+      "kappa",
+      "spec_sens",
+      "no_omission",
+      "prevalence",
+      "equal_sens_spec",
+      "sensitivty"
     )
   ) == FALSE) {
     stop(
@@ -199,7 +207,7 @@ MSDM_Posteriori <- function(records,
   }
 
 
-  #Create Binary folder
+  # Create Binary folder
   foldCat <- paste(dirsave, c("BINr"), sep = "/")
   foldCon <- paste(dirsave, c("CONr"), sep = "/")
   dir.create(foldCat)
@@ -207,9 +215,9 @@ MSDM_Posteriori <- function(records,
 
   # creation of a data.frame with presences and absences
   records <- records[, c(sp, x, y)]
-  records <- records[!duplicated(records[, c(x, y)]),]
+  records <- records[!duplicated(records[, c(x, y)]), ]
   absences <- absences[, c(sp, x, y)]
-  colnames(records) <- colnames(absences) <- c('sp', 'x', 'y')
+  colnames(records) <- colnames(absences) <- c("sp", "x", "y")
   SpData <- rbind(records, absences)
   SpData$pres_abse <-
     c(rep(1, nrow(records)), rep(0, nrow(absences)))
@@ -218,13 +226,13 @@ MSDM_Posteriori <- function(records,
   # 2-the directory of raster of each species
   if (is.null(dirraster) == TRUE) {
     stop("Give a directory in the dirraster argument")
-  } else{
-    RasterList <- list.files(dirraster, pattern = '.tif$')
-    sps <- gsub('.tif$', '', RasterList)
+  } else {
+    RasterList <- list.files(dirraster, pattern = ".tif$")
+    sps <- gsub(".tif$", "", RasterList)
     RasterList <-
-      list.files(dirraster, pattern = '.tif$', full.names = TRUE)
+      list.files(dirraster, pattern = ".tif$", full.names = TRUE)
     RasterList <- data.frame(sps, RasterList, stringsAsFactors = FALSE)
-    colnames(RasterList) <- c("sp", 'RasterList')
+    colnames(RasterList) <- c("sp", "RasterList")
   }
 
   # Vector with species names, and proving if records and raster layer
@@ -234,32 +242,38 @@ MSDM_Posteriori <- function(records,
 
 
   if (any(!SpNames %in% SpNamesR)) {
-    message(sum(!SpNames %in% SpNamesR),
-            ' species names differ between records and raster files \n')
-    message("Next names were not found in records database: ",
-            paste0(SpNamesR[!SpNames %in% SpNamesR], " "))
-    RasterList <- RasterList[!(RasterList[, "sp"]%in%SpNamesR[!SpNames %in% SpNamesR]),]
-    message("Next names were not found in raster layers: ",
-            paste0(SpNames[!SpNames %in% SpNamesR], " "))
-    records <- records[!(records$sp%in%SpNames[!SpNames %in% SpNamesR]), ]
+    message(
+      sum(!SpNames %in% SpNamesR),
+      " species names differ between records and raster files \n"
+    )
+    message(
+      "Next names were not found in records database: ",
+      paste0(SpNamesR[!SpNames %in% SpNamesR], " ")
+    )
+    RasterList <- RasterList[!(RasterList[, "sp"] %in% SpNamesR[!SpNames %in% SpNamesR]), ]
+    message(
+      "Next names were not found in raster layers: ",
+      paste0(SpNames[!SpNames %in% SpNamesR], " ")
+    )
+    records <- records[!(records$sp %in% SpNames[!SpNames %in% SpNamesR]), ]
     message("species names would be the same in records, absences and raster layers")
   }
 
   #### threshold for BMCP method
-  if ((method == "BMCP" & any(buffer%in%"single"))) {
-    if(all(c("type", "km")%in%names(buffer))){
+  if ((method == "BMCP" & any(buffer %in% "single"))) {
+    if (all(c("type", "km") %in% names(buffer))) {
       buffer2 <- as.integer(buffer["km"]) * 1000
-    }else{
+    } else {
       stop("Use buffer argument properly for 'single' buffer type method, e.g. buffer=c(type='single', km=100)\n")
     }
   }
 
   # loop to process each species
   for (s in 1:length(SpNames)) {
-    cat(paste(s, "from", length(SpNames), ":", SpNames[s]), '\n')
+    cat(paste(s, "from", length(SpNames), ":", SpNames[s]), "\n")
     # Read the raster of the species
     Adeq <-
-      raster::raster(RasterList[RasterList[, "sp"] == SpNames[s], 'RasterList'])
+      raster::raster(RasterList[RasterList[, "sp"] == SpNames[s], "RasterList"])
     # if (is.na(crs(Adeq))) {
     #   crs(Adeq) <-
     #     "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
@@ -269,9 +283,11 @@ MSDM_Posteriori <- function(records,
     singleSpData <- SpData[SpData$sp == SpNames[s], ]
     PredPoint <- raster::extract(Adeq, singleSpData[, c(x, y)])
     PredPoint <-
-      data.frame(pres_abse = singleSpData[, 'pres_abse'], PredPoint)
-    Eval <- dismo::evaluate(PredPoint[PredPoint$pres_abse == 1, 2],
-                     PredPoint[PredPoint$pres_abse == 0, 2])
+      data.frame(pres_abse = singleSpData[, "pres_abse"], PredPoint)
+    Eval <- dismo::evaluate(
+      PredPoint[PredPoint$pres_abse == 1, 2],
+      PredPoint[PredPoint$pres_abse == 0, 2]
+    )
     Thr <- unlist(c(dismo::threshold(Eval))[threshold])
 
     # MCP method----
@@ -282,14 +298,14 @@ MSDM_Posteriori <- function(records,
       Adeq[(hull[] == 0)] <- 0
       raster::writeRaster(
         Adeq,
-        paste(foldCon, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+        paste(foldCon, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
         format = "GTiff",
         overwrite = TRUE
       )
       Mask <- Adeq > Thr
       raster::writeRaster(
         Mask,
-        paste(foldCat, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+        paste(foldCat, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
         format = "GTiff",
         overwrite = TRUE
       )
@@ -302,48 +318,49 @@ MSDM_Posteriori <- function(records,
       hull <- dismo::predict(Adeq, hull, mask = TRUE)
       sps <-
         singleSpData[singleSpData[, "pres_abse"] == 1, c("x", "y")]
-      if(raster::maxValue(hull)==0){
+      if (raster::maxValue(hull) == 0) {
         spraster <- raster::rasterize(sps, Adeq, field = 1)
-        hull[spraster[]==1] <- 1
+        hull[spraster[] == 1] <- 1
       }
       hull2 <- hull
       hull2[hull2[] == 0] <- NA
       hull2 <- raster::boundaries(hull2)
       hull2[hull2[] == 0] <- NA
       df <- raster::rasterToPoints(hull2)
-      df <- df[df[, 3] == 1,-3]
-      if (any("single"==buffer)){
+      df <- df[df[, 3] == 1, -3]
+      if (any("single" == buffer)) {
         buf <- dismo::circles(df, lonlat = TRUE, d = buffer2)
-      } else if(any("species_specific"==buffer)){
-          # method based on the maximum value of the minimum distance
-          dist <- flexclust::dist2(sps, sps, method = 'euclidean', p = 2)
-          dist[dist == 0] <- NA
-          distmin <- apply(dist, 1, function(x)
-            min(x, na.rm = TRUE))
-          buffer2 <- sort(distmin,decreasing = T)[2]
-          dist[lower.tri(dist)] <- NA
-          distl <- dist==buffer2
-          p1 <- which(apply(distl, 1,function(x) sum(x, na.rm = T))==1)
-          p2 <- which(apply(distl, 2,function(x) sum(x, na.rm = T))==1)
-          buffer2 <- distHaversine(sps[p1[1],c('x', 'y')], sps[p2[1],c('x', 'y')])
-          # df <- (gridSample(df, aggregate(hull, fact=2) , n=1))
-          buf <- circles(df, lonlat = TRUE, d = buffer2)
-        }
-      buf <- predict(Adeq, buf,  mask = TRUE)
+      } else if (any("species_specific" == buffer)) {
+        # method based on the maximum value of the minimum distance
+        dist <- flexclust::dist2(sps, sps, method = "euclidean", p = 2)
+        dist[dist == 0] <- NA
+        distmin <- apply(dist, 1, function(x) {
+          min(x, na.rm = TRUE)
+        })
+        buffer2 <- sort(distmin, decreasing = T)[2]
+        dist[lower.tri(dist)] <- NA
+        distl <- dist == buffer2
+        p1 <- which(apply(distl, 1, function(x) sum(x, na.rm = T)) == 1)
+        p2 <- which(apply(distl, 2, function(x) sum(x, na.rm = T)) == 1)
+        buffer2 <- distHaversine(sps[p1[1], c("x", "y")], sps[p2[1], c("x", "y")])
+        # df <- (gridSample(df, aggregate(hull, fact=2) , n=1))
+        buf <- circles(df, lonlat = TRUE, d = buffer2)
+      }
+      buf <- predict(Adeq, buf, mask = TRUE)
       buf[(hull[] == 1)] <- 1
       buf[(!is.na(Adeq[]) & is.na(buf[]))] <- 0
       Adeq[which(buf[] != 1)] <- 0
 
       raster::writeRaster(
         Adeq,
-        paste(foldCon, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+        paste(foldCon, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
         format = "GTiff",
         overwrite = TRUE
       )
       Mask <- (Adeq > Thr)
       raster::writeRaster(
         Mask,
-        paste(foldCat, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+        paste(foldCat, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
         format = "GTiff",
         overwrite = TRUE
       )
@@ -399,27 +416,26 @@ MSDM_Posteriori <- function(records,
 
         raster::writeRaster(
           Mask2,
-          paste(foldCon, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+          paste(foldCon, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
           format = "GTiff",
           overwrite = TRUE
         )
         raster::writeRaster(
           Mask,
-          paste(foldCat, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+          paste(foldCat, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
           format = "GTiff",
           overwrite = TRUE
         )
-
-      } else{
+      } else {
         # Create a vector which contain the number (e.i. ID) of the patches
         # with presences
         filter1 <- unique(stats::na.omit(raster::values(AdeqBin2)))
         # In this step are created two data.frame one with the patches coordinates
         # that contain presences and another with patches coordinates without presences
         CoordPathP <-
-          as.data.frame(AdeqPoints[AdeqPoints[, 3] %in% filter1,])
+          as.data.frame(AdeqPoints[AdeqPoints[, 3] %in% filter1, ])
         CoordPathNP <-
-          as.data.frame(AdeqPoints[!AdeqPoints[, 3] %in% filter1,])
+          as.data.frame(AdeqPoints[!AdeqPoints[, 3] %in% filter1, ])
         # Here is created a matrix with all combination between ID of patches
         # with and without presences
 
@@ -450,17 +466,17 @@ MSDM_Posteriori <- function(records,
             for (j in 2:length(SEQ)) {
               SEQ2 <- (SEQ[(j - 1)] + 1):SEQ[j]
               dist[j] <-
-                min(flexclust::dist2(A[SEQ2,], B, method = 'euclidean', p = 2), na.rm = T)
+                min(flexclust::dist2(A[SEQ2, ], B, method = "euclidean", p = 2), na.rm = T)
             }
             eucdist <- min(dist[2:length(SEQ)], na.rm = T)
-          } else{
-            eucdist <- min(flexclust::dist2(A, B, method = 'euclidean', p = 2))
+          } else {
+            eucdist <- min(flexclust::dist2(A, B, method = "euclidean", p = 2))
           }
           DistBetweenPoly0[i, 3] <- eucdist
         }
 
         DistBetweenPoly0 <-
-          DistBetweenPoly0[order(DistBetweenPoly0[, 2]),]
+          DistBetweenPoly0[order(DistBetweenPoly0[, 2]), ]
         # Minimum Euclidean Distance between patches with and without presences
         DistBetweenPoly <-
           tapply(X = DistBetweenPoly0[, 3], DistBetweenPoly0[, 2], min)
@@ -470,14 +486,15 @@ MSDM_Posteriori <- function(records,
         #   round(DistBetweenPoly, 4)
 
         # OBR method------
-        if (method == 'OBR') {
+        if (method == "OBR") {
           # method based on the maximum value of the minimum distance
           spraster <- rasterize(pts1, Adeq, field = 1)
-          sps <- as(spraster, 'SpatialPixels')@coords
-          dist <- flexclust::dist2(sps, sps, method = 'euclidean', p = 2)
+          sps <- as(spraster, "SpatialPixels")@coords
+          dist <- flexclust::dist2(sps, sps, method = "euclidean", p = 2)
           dist[dist == 0] <- NA
-          distmin <- apply(dist, 1, function(x)
-            min(x, na.rm = TRUE))#
+          distmin <- apply(dist, 1, function(x) {
+            min(x, na.rm = TRUE)
+          }) #
           CUT <- max(distmin)
         }
         # LQ method------
@@ -486,12 +503,13 @@ MSDM_Posteriori <- function(records,
           CUT <- c(summary(DistBetweenPoly0[, 3]))[2]
         }
 
-        #Chosen patches
+        # Chosen patches
         Mask <- DistBetweenPoly0[DistBetweenPoly0[, 3] <= CUT, 2]
         Mask <-
           raster::match(AdeqBin,
-                        table = c(Mask, npatch1),
-                        nomatch = 0)
+            table = c(Mask, npatch1),
+            nomatch = 0
+          )
         Mask <- Mask != 0
         # Mask <- AdeqBin%in%c(Mask,npatch1)
         Mask[is.na(Adeq)] <- NA
@@ -500,18 +518,18 @@ MSDM_Posteriori <- function(records,
         # Save results as raster object
         raster::writeRaster(
           Mask2,
-          paste(foldCon, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+          paste(foldCon, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
           format = "GTiff",
           overwrite = TRUE
         )
         raster::writeRaster(
           Mask,
-          paste(foldCat, paste(SpNames[s], '.tif', sep = ""), sep = "/"),
+          paste(foldCat, paste(SpNames[s], ".tif", sep = ""), sep = "/"),
           format = "GTiff",
           overwrite = TRUE
         )
       }
     }
   }
-  cat('results are in: \n', dirsave, '\n')
-  }
+  cat("results are in: \n", dirsave, "\n")
+}
