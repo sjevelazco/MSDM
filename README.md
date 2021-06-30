@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![Lifecycle:
 manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://www.tidyverse.org/lifecycle/#manturing)
-[![R-CMD-check](https://github.com/sjevelazco/MSDM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sjevelazco/MSDM/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/sjevelazco/MSDM/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/sjevelazco/MSDM/actions/workflows/pkgdown.yaml)
 
 
 # MSDM
