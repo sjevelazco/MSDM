@@ -27,18 +27,18 @@ MSDM_Posteriori(
 
 \item{y}{character. Column name with latitude values. This name must be the same for presences and absences database.}
 
-\item{sp}{character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e. species distribution) databases. It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g. Alchornea_glandulosa).
-Do not use author names, symbols or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. It is mandatory that the species names and the raster are the same.}
+\item{sp}{character. Column name with species names. Species names must be the same for presences, absences, and raster layer (i.e., species distribution) databases. It would be desirable that the species names are as simple as possible and with no space between the genus and the specific epithet (e.g., Alchornea_glandulosa).
+Do not use author names, symbols, or accents. For example, substitute names like Senna chacoensis (L.Bravo) H.S.Irwin & Barneby or Erythrina crista-galli L., for Senna_chacoensis and Erythrina_cristagalli. The species names and the raster must be the same.}
 
 \item{method}{character. A character string indicating which MSDM method must be used create.}
 
-\item{dirraster}{character. A character string indicating the directory where are species raster files, i.e. species distribution models. It is mandatory that the species names and the raster are the same (see comments about species names format in 'sp' argument ). Raster layer must be in geotiff format.}
+\item{dirraster}{character. A character string indicating the directory where are species raster files, i.e. species distribution models. The species names and the raster must be the same (see comments about species names format in 'sp' argument ). Raster layer must be in geotiff format.}
 
 \item{threshold}{character. Select type of threshold (kappa, spec_sens, no_omission, prevalence, equal_sens_spec, sensitivity)
-to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", it is the threshold at which sensitivity and specificity are equal.}
+to get binary models (see \code{\link[dismo]{threshold}} help of dismo package for further information about different thresholds). Default threshold value is "equal_sens_spec", which is the threshold at which sensitivity and specificity are equal.}
 
-\item{buffer}{character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species, this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
-"species_specific" type calculates the minimum pairwise-distances between all occurrences and then select the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence occurrences of each species, thus for each species, a value of buffer width will be calculated (usage buffer="species_specific").}
+\item{buffer}{character. Type o buffer width use in BMCP approach. "single" type will be used a single buffer width for all species; this value is interpreted in km (e.g. buffer=c(type="single", km=126)).
+"species_specific" type calculates the minimum pairwise-distances between all occurrences and then selects the maximum distance, i.e., the value of the buffer will be the maximum distance from the minimum distance. This procedure depends on the presence of each species' occurrences; thus, for each species, a value of buffer width will be calculated (usage buffer="species_specific").}
 
 \item{dirsave}{character. A character string indicating the directory where result must be saved.}
 }
@@ -46,7 +46,7 @@ to get binary models (see \code{\link[dismo]{threshold}} help of dismo package f
 This function save raster files (with geotiff format) with continuous and binary species raster files separated in CONr and BINr folders respectively.
 }
 \description{
-Methods to correct overprediction of species distribution models based on occurrences and suitability patterns.
+These methods reduce overprediction of species distribution models based on the combination of the patterns of species occurrences and predicted suitability
 }
 \details{
 Abbreviation list
@@ -82,7 +82,7 @@ PRES (Only occurrences based restriction). This is a more restrictive variant of
 LQ (Lower Quantile). This method is similar to the OBR method, except by the
 procedure to define a distance threshold to withdrawn k patches, which is the
 lower quartile distance between k patches to the closest l patch. Whenever a suitable
-pixel is within a k patch, i.e. not within this lower quartile, the suitability of the
+pixel is within a k patch, i.e., not within this lower quartile, the suitability of the
 pixel is reduced to zero. This means that 75% of k patches were withdrawn from the model (Mendes et al., 2020).
 
 MCP (Minimum Convex Polygon). Compiled and adapted from
@@ -91,7 +91,7 @@ pixels that do not intercept a minimum convex polygon,
 with interior angles smaller than 180, enclosing all occurrences of a species.
 
 BMCP (Buffered Minimum Convex Polygon). Compiled and adapted
-from Kremen et al. (2008), it is alike the MCP except by the inclusion of a
+from Kremen et al. (2008), it is similar to the MCP except by the inclusion of a
 buffer zone surrounding minimum convex polygons. When used with the "single" options for buffer argument
 function will ask for a value in km to be used as the buffer with. When used "species_specific" a buffer will be calculated for each species based on the presences occurrences patterns, assuming as buffer width
 the maximum distance in a vector of minimal pairwise distances between occurrences.
@@ -99,12 +99,12 @@ the maximum distance in a vector of minimal pairwise distances between occurrenc
 Further methodological and performance information of these methods see Mendes et al. (2020).
 }
 \examples{
-
+\dontrun{
 require(MSDM)
 require(raster)
-data("sp_sdm") #continuous species distribution models of five species
-data("occurrences") #presences data
-data("absences") #absences data
+data("sp_sdm") # continuous species distribution models of five species
+data("occurrences") # presences data
+data("absences") # absences data
 
 # sp_sdm is database with simple species distribution models, i.e. without any restriction method
 plot(sp_sdm)
@@ -122,15 +122,18 @@ dir.create(file.path(tmdir, "original_sdm"))
 dir_models <- file.path(tmdir, "original_sdm")
 dir_models
 writeRaster(sp_sdm, file.path(dir_models, names(sp_sdm)),
-            bylayer=TRUE, format='GTiff', overwrite=TRUE)
+  bylayer = TRUE, format = "GTiff", overwrite = TRUE
+)
 # shell.exec(dir_models)
 
 
 # BMCP method with a single buffer for all species----
-MSDM_Posteriori(records=occurrences, absences=absences,
-                x="x", y="y", sp="sp", method="BMCP", buffer=c(type="single", km=150),
-                dirraster = dir_models, threshold = "spec_sens",
-                dirsave = tmdir)
+MSDM_Posteriori(
+  records = occurrences, absences = absences,
+  x = "x", y = "y", sp = "sp", method = "BMCP", buffer = c(type = "single", km = 150),
+  dirraster = dir_models, threshold = "spec_sens",
+  dirsave = tmdir
+)
 
 d <- list.dirs(tmdir, recursive = FALSE)
 # Categorical models corrected by BMCP methods
@@ -143,10 +146,12 @@ plot(con_bmcp)
 
 
 # OBR method----
-MSDM_Posteriori(records=occurrences, absences=absences,
-                x="x", y="y", sp="sp", method="OBR",
-                dirraster = dir_models, threshold = "spec_sens",
-                dirsave = tmdir)
+MSDM_Posteriori(
+  records = occurrences, absences = absences,
+  x = "x", y = "y", sp = "sp", method = "OBR",
+  dirraster = dir_models, threshold = "spec_sens",
+  dirsave = tmdir
+)
 
 d <- list.dirs(tmdir, recursive = FALSE)
 
@@ -157,6 +162,7 @@ plot(cat_obr)
 con_obr <- stack(list.files(d[2], full.names = TRUE))
 plot(con_obr)
 # shell.exec(rdir)
+}
 
 }
 \references{
