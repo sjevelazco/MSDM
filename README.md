@@ -6,7 +6,9 @@ manturing](https://img.shields.io/badge/lifecycle-manturing-blue.svg)](https://w
 
 
 # MSDM
-Methods to deal with overprediction of species distribution models
+Methods to deal with overprediction of species distribution models. 
+
+This package was totally implemented in the `msdm_priori` and `msdm_posteriori` functions of [**flexsdm**](https://github.com/sjevelazco/flexsdm) R package. 
 
 
 ## Installation
